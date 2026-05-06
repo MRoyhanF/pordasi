@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('_stable', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('jenisKelamin', ['Pria', 'Wanita'])->nullable();
-            $table->enum('role', ['SuperAdmin', 'Admin', 'Pelatih', 'Viewer'])->default('Admin');
-            $table->string('phone')->nullable();
+            $table->string('name');
+            $table->foreignId('idKabupaten')->constrained('kabupaten')->onDelete('cascade');
+            $table->string('alamat');
+            $table->string('longitude');
+            $table->string('latitude');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('_stable');
     }
 };

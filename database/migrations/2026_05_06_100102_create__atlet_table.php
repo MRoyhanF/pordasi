@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('_atlet', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('jenisKelamin', ['Pria', 'Wanita'])->nullable();
-            $table->enum('role', ['SuperAdmin', 'Admin', 'Pelatih', 'Viewer'])->default('Admin');
-            $table->string('phone')->nullable();
+            $table->string('nama');
+            $table->integer('umur');
+            $table->enum('level', ['Mula', 'Madya', 'Wira']);
+            $table->enum('jenisKelamin', ['Pria', 'Wanita']);
+            $table->foreignId('idStable')->constrained('_stable')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('_atlet');
     }
 };
