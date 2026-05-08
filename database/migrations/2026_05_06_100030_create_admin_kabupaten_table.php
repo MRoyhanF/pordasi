@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_stable', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+        Schema::create('admin_kabupaten', function (Blueprint $table) {
+            $table->foreignId('idUser')->constrained('users')->onDelete('cascade');
             $table->foreignId('idKabupaten')->constrained('kabupaten')->onDelete('cascade');
-            $table->string('alamat');
-            $table->string('longitude');
-            $table->string('latitude');
+            $table->boolean('isActive')->default(true);
             $table->timestamps();
             $table->softDeletes();
+            $table->primary(['idUser', 'idKabupaten']);
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_stable');
+        Schema::dropIfExists('admin_kabupaten');
     }
 };

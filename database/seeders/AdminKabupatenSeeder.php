@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,22 +13,29 @@ class AdminKabupatenSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin 1 -> Kota Jambi
-        DB::table('_admin_kabupaten')->insert([
-            'idUser' => 2,
-            'idKabupaten' => 1,
-            'isActive' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // Relasi Admin -> Kabupaten
+        $adminKabupatenRelations = [
+            ['name' => 'Baso Aditiya', 'idKabupaten' => 1],                    // Kota Jambi
+            ['name' => 'M. Fadhila Taqwa', 'idKabupaten' => 2],                // Tanjung Jabung Barat
+            ['name' => 'Alfino Tryanugrah Rachim', 'idKabupaten' => 3],        // Tanjung Jabung Timur
+            ['name' => 'Rendi Sudrajat', 'idKabupaten' => 4],                  // Batanghari
+            ['name' => 'Fauzan Akbar', 'idKabupaten' => 5],                    // Muaro Jambi
+        ];
 
-        // Admin 2 -> Kabupaten Muaro Jambi
-        DB::table('_admin_kabupaten')->insert([
-            'idUser' => 3,
-            'idKabupaten' => 2,
-            'isActive' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        foreach ($adminKabupatenRelations as $relation) {
+            $user = User::where('name', $relation['name'])->first();
+
+            if ($user) {
+                // Gunakan updateOrInsert untuk avoid duplicate
+                DB::table('admin_kabupaten')->updateOrInsert(
+                    ['idUser' => $user->id, 'idKabupaten' => $relation['idKabupaten']],
+                    [
+                        'isActive' => 1,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]
+                );
+            }
+        }
     }
 }

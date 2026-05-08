@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_pelatih', function (Blueprint $table) {
-            $table->foreignId('userId')->constrained('users')->onDelete('cascade');
-            $table->foreignId('stableId')->constrained('_stable')->onDelete('cascade');
-            $table->boolean('isActive')->default(true);
+        Schema::create('kuda', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('pasport')->nullable();
+            $table->string('prestasi')->nullable();
+            $table->string('pemilik')->nullable();
+            $table->foreignId('stable')->constrained('stable')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-            $table->primary(['userId', 'stableId']);
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_pelatih');
+        Schema::dropIfExists('kuda');
     }
 };

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_admin_kabupaten', function (Blueprint $table) {
-            $table->foreignId('idUser')->constrained('users')->onDelete('cascade');
-            $table->foreignId('idKabupaten')->constrained('kabupaten')->onDelete('cascade');
+        Schema::create('pelatih', function (Blueprint $table) {
+            $table->foreignId('userId')->constrained('users')->onDelete('cascade');
+            $table->foreignId('stableId')->constrained('stable')->onDelete('cascade');
             $table->boolean('isActive')->default(true);
             $table->timestamps();
             $table->softDeletes();
-            $table->primary(['idUser', 'idKabupaten']);
+            $table->primary(['userId', 'stableId']);
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_admin_kabupaten');
+        Schema::dropIfExists('pelatih');
     }
 };

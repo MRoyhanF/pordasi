@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -14,81 +13,115 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Super Admin
-        DB::table('users')->insert([
-            'email' => 'superadmin@jambi.com',
-            'password' => Hash::make('password123'),
-            'jenisKelamin' => 'Pria',
-            'role' => 'SuperAdmin',
-            'phone' => '081234567890',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $emailIndex = [];
 
-        // Admin Kabupaten 1
-        DB::table('users')->insert([
-            'email' => 'admin_jambi@jambi.com',
-            'password' => Hash::make('password123'),
-            'jenisKelamin' => 'Pria',
-            'role' => 'Admin',
-            'phone' => '081234567891',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // Helper function untuk generate unique email
+        $getUniqueEmail = function ($role) use (&$emailIndex) {
+            if (!isset($emailIndex[$role])) {
+                $emailIndex[$role] = 0;
+                return "{$role}@gmail.com";
+            }
 
-        // Admin Kabupaten 2
-        DB::table('users')->insert([
-            'email' => 'admin_muaro@jambi.com',
-            'password' => Hash::make('password123'),
-            'jenisKelamin' => 'Wanita',
-            'role' => 'Admin',
-            'phone' => '081234567892',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            $emailIndex[$role]++;
+            return "{$role}{$emailIndex[$role]}@gmail.com";
+        };
 
-        // Pelatih 1
-        DB::table('users')->insert([
-            'email' => 'pelatih1@jambi.com',
-            'password' => Hash::make('password123'),
-            'jenisKelamin' => 'Pria',
-            'role' => 'Pelatih',
-            'phone' => '081234567893',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // SUPER ADMIN
+        $superAdmins = [
+            ['name' => 'Siti Nurlela', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Ridwan', 'jenisKelamin' => 'Pria'],
+        ];
 
-        // Pelatih 2
-        DB::table('users')->insert([
-            'email' => 'pelatih2@jambi.com',
-            'password' => Hash::make('password123'),
-            'jenisKelamin' => 'Pria',
-            'role' => 'Pelatih',
-            'phone' => '081234567894',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        foreach ($superAdmins as $admin) {
+            User::firstOrCreate(
+                ['email' => $getUniqueEmail('superadmin')],
+                [
+                    'name' => $admin['name'],
+                    'password' => Hash::make('password'),
+                    'jenisKelamin' => $admin['jenisKelamin'],
+                    'role' => 'SuperAdmin',
+                    'phone' => null,
+                    'alamat' => null,
+                ]
+            );
+        }
 
-        // Pelatih 3
-        DB::table('users')->insert([
-            'email' => 'pelatih3@jambi.com',
-            'password' => Hash::make('password123'),
-            'jenisKelamin' => 'Wanita',
-            'role' => 'Pelatih',
-            'phone' => '081234567895',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // ADMIN
+        $admins = [
+            ['name' => 'Baso Aditiya', 'jenisKelamin' => 'Pria'],
+            ['name' => 'M. Fadhila Taqwa', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Alfino Tryanugrah Rachim', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Rendi Sudrajat', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Fauzan Akbar', 'jenisKelamin' => 'Pria'],
+        ];
 
-        // User untuk testing registration (akan menjadi admin)
-        DB::table('users')->insert([
-            'email' => 'pending_admin@jambi.com',
-            'password' => Hash::make('password123'),
-            'jenisKelamin' => 'Pria',
-            'role' => 'Pelatih',
-            'phone' => '081234567896',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        foreach ($admins as $admin) {
+            User::firstOrCreate(
+                ['email' => $getUniqueEmail('admin')],
+                [
+                    'name' => $admin['name'],
+                    'password' => Hash::make('password'),
+                    'jenisKelamin' => $admin['jenisKelamin'],
+                    'role' => 'Admin',
+                    'phone' => null,
+                    'alamat' => null,
+                ]
+            );
+        }
+
+        // PELATIH
+        $pelatih = [
+            ['name' => 'Muhammad Nurdiansyah', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Ridwan', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Ratu Kholiah', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Safitriani', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Siti Nurlela', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Lela Armila', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Muhaimin', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Sukma Dewi', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Nurdin', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Tarmizi', 'jenisKelamin' => 'Pria'],
+        ];
+
+        foreach ($pelatih as $p) {
+            User::firstOrCreate(
+                ['email' => $getUniqueEmail('pelatih')],
+                [
+                    'name' => $p['name'],
+                    'password' => Hash::make('password'),
+                    'jenisKelamin' => $p['jenisKelamin'],
+                    'role' => 'Pelatih',
+                    'phone' => null,
+                    'alamat' => null,
+                ]
+            );
+        }
+
+        // VIEWER
+        $viewers = [
+            ['name' => 'Rustam, S.H., M.H., NL.P.', 'jenisKelamin' => 'Pria'],
+            ['name' => 'H. Hasan Basri Husin, S.H., M.A.P.', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Karyadi, S.E.', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Shelly Marchelina', 'jenisKelamin' => 'Wanita'],
+            ['name' => 'Sulaiman', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Yusuf', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Dendi', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Nur Subiyantoro, SE.', 'jenisKelamin' => 'Pria'],
+            ['name' => 'Muhammad Ichsan, S.Kom', 'jenisKelamin' => 'Pria'],
+        ];
+
+        foreach ($viewers as $viewer) {
+            User::firstOrCreate(
+                ['email' => $getUniqueEmail('viewer')],
+                [
+                    'name' => $viewer['name'],
+                    'password' => Hash::make('password'),
+                    'jenisKelamin' => $viewer['jenisKelamin'],
+                    'role' => 'Viewer',
+                    'phone' => null,
+                    'alamat' => null,
+                ]
+            );
+        }
     }
 }

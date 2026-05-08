@@ -15,14 +15,12 @@ class DatabaseSeeder extends Seeder
         // Seed data in order of dependencies
         $this->call([
             KabupatenSeeder::class,
+            StableSeeder::class,
             UserSeeder::class,
             AdminKabupatenSeeder::class,
-            StableSeeder::class,
-            AtletSeeder::class,
             PelatihSeeder::class,
-            AdminRegistrationSeeder::class,
-            RegistrationStepLogSeeder::class,
-            RegistrationDocumentSeeder::class,
+            KudaSeeder::class,
+            AtletSeeder::class,
         ]);
     }
 }

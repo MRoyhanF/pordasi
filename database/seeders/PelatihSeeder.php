@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,49 +13,41 @@ class PelatihSeeder extends Seeder
      */
     public function run(): void
     {
-        // Pelatih 1 -> Stable 1
-        DB::table('_pelatih')->insert([
-            'userId' => 4,
-            'stableId' => 1,
-            'isActive' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // Relasi Pelatih -> Stable
+        $pelatihStableRelations = [
+            // Al Hidayah Horse Stable (stable_id = 1)
+            ['name' => 'Muhammad Nurdiansyah', 'stableId' => 1],
+            ['name' => 'Ridwan', 'stableId' => 1],
+            ['name' => 'Ratu Kholiah', 'stableId' => 1],
+            ['name' => 'Safitriani', 'stableId' => 1],
+            ['name' => 'Siti Nurlela', 'stableId' => 1],
+            ['name' => 'Lela Armila', 'stableId' => 1],
 
-        // Pelatih 2 -> Stable 2
-        DB::table('_pelatih')->insert([
-            'userId' => 5,
-            'stableId' => 2,
-            'isActive' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            // Joko Tingkir Stable (stable_id = 2)
+            ['name' => 'Muhaimin', 'stableId' => 2],
 
-        // Pelatih 2 -> Stable 3 (satu trainer bisa multiple stable)
-        DB::table('_pelatih')->insert([
-            'userId' => 5,
-            'stableId' => 3,
-            'isActive' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            // Marmer Horse Stable (stable_id = 3)
+            ['name' => 'Sukma Dewi', 'stableId' => 3],
 
-        // Pelatih 3 -> Stable 4
-        DB::table('_pelatih')->insert([
-            'userId' => 6,
-            'stableId' => 4,
-            'isActive' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+            // The Frest Stable Jambi (stable_id = 4)
+            ['name' => 'Nurdin', 'stableId' => 4],
+            ['name' => 'Tarmizi', 'stableId' => 4],
+        ];
 
-        // Pelatih 3 -> Stable 5
-        DB::table('_pelatih')->insert([
-            'userId' => 6,
-            'stableId' => 5,
-            'isActive' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        foreach ($pelatihStableRelations as $relation) {
+            $user = User::where('name', $relation['name'])->first();
+
+            if ($user) {
+                // Gunakan updateOrInsert pada pivot table untuk avoid duplicate
+                DB::table('pelatih')->updateOrInsert(
+                    ['userId' => $user->id, 'stableId' => $relation['stableId']],
+                    [
+                        'isActive' => 1,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]
+                );
+            }
+        }
     }
 }

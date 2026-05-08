@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_atlet', function (Blueprint $table) {
+        Schema::create('atlet', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->integer('umur');
             $table->enum('level', ['Mula', 'Madya', 'Wira']);
             $table->enum('jenisKelamin', ['Pria', 'Wanita']);
-            $table->foreignId('idStable')->constrained('_stable')->onDelete('cascade');
+            $table->foreignId('idStable')->constrained('stable')->onDelete('cascade');
+            $table->string('alamat')->nullable();
+            $table->date('tanggal_lahir')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_atlet');
+        Schema::dropIfExists('atlet');
     }
 };

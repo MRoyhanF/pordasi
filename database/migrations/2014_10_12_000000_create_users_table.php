@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('jenisKelamin', ['Pria', 'Wanita'])->nullable();
             $table->enum('role', ['SuperAdmin', 'Admin', 'Pelatih', 'Viewer'])->default('Admin');
             $table->string('phone')->nullable();
+            $table->string('alamat')->nullable();
             $table->timestamps();
             $table->softDeletes();
-        });
+        }); 
     }
 
     /**
