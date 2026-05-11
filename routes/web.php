@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
     // SuperAdmin Routes
     Route::middleware('role:SuperAdmin')->group(function () {
-        Route::resource('kabupaten', KabupatenController::class)->only(['index', 'show']);
+        Route::resource('kabupaten', KabupatenController::class);
     });
 });
 
