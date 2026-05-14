@@ -103,6 +103,25 @@ class StableController extends Controller
     }
 
     /**
+     * Show the form for editing the specified stable
+     */
+    public function edit($id)
+    {
+        $stable = Stable::findOrFail($id);
+        
+        // Check authorization
+        abort_if(!$this->canManageStable($stable), 403, 'Anda tidak memiliki akses ke stable ini');
+
+        $kabupaten = Kabupaten::all();
+
+        return view('stable.edit', [
+            'title' => 'Edit Stable - ' . $stable->nama,
+            'stable' => $stable,
+            'kabupaten' => $kabupaten,
+        ]);
+    }
+
+    /**
      * Update the specified stable in database
      */
     public function update(Request $request, $id)
