@@ -55,7 +55,7 @@ class KabupatenController extends Controller
      */
     public function show($id)
     {
-        $kabupaten = Kabupaten::with(['stables.atlets', 'stables.pelatih'])
+        $kabupaten = Kabupaten::with(['stables.atlets', 'stables.pelatih', 'adminKabupaten.user'])
             ->findOrFail($id);
 
         $stats = $kabupaten->getStats();

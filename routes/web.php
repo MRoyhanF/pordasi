@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KabupatenController;
+use App\Http\Controllers\AdminKabupatentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,13 @@ Route::middleware('auth')->group(function () {
     // SuperAdmin Routes
     Route::middleware('role:SuperAdmin')->group(function () {
         Route::resource('kabupaten', KabupatenController::class);
+        
+        // Admin Kabupaten Management (nested under kabupaten)
+        Route::get('/kabupaten/{kabupatanId}/admin/get-users', [AdminKabupatentController::class, 'getUsers'])->name('admin-kabupaten.get-users');
+        Route::post('/kabupaten/{kabupatanId}/admin', [AdminKabupatentController::class, 'store'])->name('admin-kabupaten.store');
+        Route::get('/kabupaten/{kabupatanId}/admin/{userId}', [AdminKabupatentController::class, 'getAdmin'])->name('admin-kabupaten.get');
+        Route::patch('/kabupaten/{kabupatanId}/admin/{userId}', [AdminKabupatentController::class, 'update'])->name('admin-kabupaten.update');
+        Route::delete('/kabupaten/{kabupatanId}/admin/{userId}', [AdminKabupatentController::class, 'destroy'])->name('admin-kabupaten.destroy');
     });
 });
 
