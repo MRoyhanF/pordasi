@@ -7,7 +7,7 @@
         Dashboard
     </a>
 
-    <a href="#" class="block px-3 sm:px-4 py-2 text-gray-300 hover:bg-gray-800 rounded-lg transition text-sm sm:text-base">
+    <a href="{{ route('stable.index') }}" class="block px-3 sm:px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request()->routeIs('stable.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
         <svg class="w-4 h-4 sm:w-5 sm:h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.5 1.5H3.75A2.25 2.25 0 001.5 3.75v12.5A2.25 2.25 0 003.75 18.5h12.5a2.25 2.25 0 002.25-2.25V9.5m-15-4h9m-9 3h6"/>
         </svg>

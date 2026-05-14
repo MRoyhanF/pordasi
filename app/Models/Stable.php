@@ -10,7 +10,9 @@ class Stable extends Model
     use SoftDeletes;
 
     protected $table = 'stable';
-    protected $fillable = ['idKabupaten', 'nama', 'pemilik', 'alamat_stable', 'pimpinan_stable', 'mulai_berdiri'];
+    public $timestamps = true;
+    protected $dates = ['deleted_at'];
+    protected $fillable = ['idKabupaten', 'nama', 'pemilik', 'alamat_stable', 'pimpinan_stable', 'mulai_berdiri', 'alamat_ktp_pemilik', 'no_akte_badan_hukum', 'no_pengesahan_kumham', 'npwp', 'domisili_badan_hukum', 'jumlah_kandang', 'frameMap'];
 
     /**
      * Get the kabupaten that owns this stable
