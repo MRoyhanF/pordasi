@@ -28,45 +28,54 @@ class AdminKabupatentController extends Controller
     //     }
     // }
     public function getUsers($kabupatenId)
-{
-    try {
-        Kabupaten::findOrFail($kabupatenId);
+    {
+        try {
+            Kabupaten::findOrFail($kabupatenId);
 
-        // Ambil user yang belum menjadi admin kabupaten
-        $existingAdmins = AdminKabupaten::where('idKabupaten', $kabupatenId)
-            ->whereNull('deleted_at')
-            ->pluck('idUser')
-            ->toArray();
+            // Ambil user yang belum menjadi admin kabupaten
+            // SoftDeletes trait otomatis exclude deleted records
+            $existingAdmins = AdminKabupaten::where('idKabupaten', $kabupatenId)
+                ->pluck('idUser')
+                ->toArray();
 
-        $users = User::whereNotIn('id', $existingAdmins)
-            ->whereNull('deleted_at')
-            ->get(['id', 'name', 'email']);
+            $users = User::whereNotIn('id', $existingAdmins)
+                ->get(['id', 'name', 'email']);
 
-        return response()->json([
-            'users' => $users
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'Kabupaten tidak ditemukan'
-        ], 404);
+            return response()->json([
+                'users' => $users
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Kabupaten tidak ditemukan'
+            ], 404);
+        }
     }
-}
 
-    /**
-     * Store new admin for kabupaten (AJAX)
-     */
     public function store(Request $request, $kabupatanId)
     {
         try {
             $kabupaten = Kabupaten::findOrFail($kabupatanId);
 
             $validated = $request->validate([
-                'idUser' => 'required|exists:users,id|unique:admin_kabupaten,idUser,NULL,id,idKabupaten,' . $kabupatanId,
+                'idUser' => [
+                    'required',
+                    'exists:users,id',
+                    // Custom unique rule untuk soft delete
+                    function ($attribute, $value, $fail) use ($kabupatanId) {
+                        $exists = AdminKabupaten::where('idKabupaten', $kabupatanId)
+                            ->where('idUser', $value)
+                            ->whereNull('deleted_at')
+                            ->exists();
+                        
+                        if ($exists) {
+                            $fail('User sudah menjadi admin untuk kabupaten ini');
+                        }
+                    }
+                ],
                 'isActive' => 'boolean',
             ], [
                 'idUser.required' => 'User harus dipilih',
                 'idUser.exists' => 'User tidak ditemukan',
-                'idUser.unique' => 'User sudah menjadi admin untuk kabupaten ini',
             ]);
 
             $validated['idKabupaten'] = $kabupatanId;
