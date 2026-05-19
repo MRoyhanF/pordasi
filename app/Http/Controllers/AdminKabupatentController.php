@@ -109,14 +109,46 @@ class AdminKabupatentController extends Controller
     {
         try {
             Kabupaten::findOrFail($kabupatanId);
+            
+            // Query untuk menemukan admin - gunakan query builder untuk lebih flexible
             $admin = AdminKabupaten::where('idKabupaten', $kabupatanId)
                 ->where('idUser', $userId)
                 ->with('user')
-                ->firstOrFail();
+                ->first(); // Gunakan first() instead of firstOrFail()
 
-            return response()->json(['admin' => $admin]);
+            if (!$admin) {                
+                // Check jika ada di deleted_at (soft deleted)
+                $deleted = AdminKabupaten::withTrashed()
+                    ->where('idKabupaten', $kabupatanId)
+                    ->where('idUser', $userId)
+                    ->first();
+                
+                if ($deleted && $deleted->deleted_at) {
+                    return response()->json([
+                        'error' => 'Admin ini telah dihapus',
+                        'details' => 'Admin sudah dalam status terhapus'
+                    ], 410); // 410 Gone
+                }
+                
+                return response()->json([
+                    'error' => 'Admin tidak ditemukan',
+                    'details' => 'Kombinasi admin dan kabupaten tidak valid'
+                ], 404);
+            }
+
+            return response()->json([
+                'admin' => $admin,
+                'success' => true
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Kabupaten tidak ditemukan'
+            ], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Admin tidak ditemukan'], 404);
+            return response()->json([
+                'error' => 'Terjadi kesalahan pada server',
+                'details' => $e->getMessage()
+            ], 500);
         }
     }
 
@@ -125,36 +157,48 @@ class AdminKabupatentController extends Controller
      */
     public function update(Request $request, $kabupatanId, $userId)
     {
-        try {
+        try {            
             $kabupaten = Kabupaten::findOrFail($kabupatanId);
             
             // Check if admin exists
-            $adminExists = AdminKabupaten::where('idKabupaten', $kabupatanId)
+            $admin = AdminKabupaten::where('idKabupaten', $kabupatanId)
                 ->where('idUser', $userId)
-                ->exists();
+                ->first();
             
-            if (!$adminExists) {
+            if (!$admin) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Admin tidak ditemukan'
                 ], 404);
             }
-
+            // Validate
             $validated = $request->validate([
-                'isActive' => 'boolean',
+                'isActive' => 'in:0,1',  // Accept "0" or "1" as strings
+            ], [
+                'isActive.in' => 'Status harus 0 atau 1'
             ]);
-
-            $validated['isActive'] = $request->has('isActive') ? 1 : 0;
-
+            // Convert to int
+            $validated['isActive'] = (int)$validated['isActive'];
+            
             // Use query builder for update to handle composite key properly
-            AdminKabupaten::where('idKabupaten', $kabupatanId)
+            $updated = AdminKabupaten::where('idKabupaten', $kabupatanId)
                 ->where('idUser', $userId)
                 ->update($validated);
-
+            
+            // Verify update
+            $adminAfter = AdminKabupaten::where('idKabupaten', $kabupatanId)
+                ->where('idUser', $userId)
+                ->first();
+            
             return response()->json([
                 'success' => true,
                 'message' => 'Admin berhasil diperbarui'
             ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal: ' . json_encode($e->errors())
+            ], 422);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
