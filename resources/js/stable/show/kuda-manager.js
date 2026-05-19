@@ -39,12 +39,20 @@ export const KudaManager = {
         if (e.target.classList.contains('editKudaBtn')) {
             const id = e.target.dataset.kudaId;
             const row = e.target.closest('tr');
-            const cells = row.querySelectorAll('td');
             
-            document.querySelector('#kudaForm [name="nama"]').value = cells[0].textContent;
-            document.querySelector('#kudaForm [name="pasport"]').value = cells[1].textContent !== '-' ? cells[1].textContent : '';
-            document.querySelector('#kudaForm [name="prestasi"]').value = '';
-            document.querySelector('#kudaForm [name="pemilik"]').value = '';
+            // Get data dari data attributes
+            const nama = row.dataset.kudaNama || '';
+            const jenis = row.dataset.kudaJenis || '';
+            const warna = row.dataset.kudaWarna || '';
+            const pasport = row.dataset.kudaPasport || '';
+            const prestasi = row.dataset.kudaPrestasi || '';
+            const pemilik = row.dataset.kudaPemilik || '';
+            
+            // Populate form dengan semua data
+            document.querySelector('#kudaForm [name="nama"]').value = nama;
+            document.querySelector('#kudaForm [name="pasport"]').value = pasport;
+            document.querySelector('#kudaForm [name="prestasi"]').value = prestasi;
+            document.querySelector('#kudaForm [name="pemilik"]').value = pemilik;
             
             document.getElementById('kudaForm').dataset.id = id;
             document.getElementById('kudaModalTitle').textContent = 'Edit Kuda';

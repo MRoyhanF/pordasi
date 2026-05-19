@@ -10,7 +10,7 @@ class Kuda extends Model
     use SoftDeletes;
 
     protected $table = 'kuda';
-    protected $fillable = ['stable', 'nama', 'jenis', 'warna', 'usia', 'tanggal_masuk'];
+    protected $fillable = ['stable', 'nama', 'pasport', 'prestasi', 'pemilik'];
 
     /**
      * Get the stable that owns this kuda

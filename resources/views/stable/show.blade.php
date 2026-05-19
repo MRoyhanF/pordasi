@@ -120,7 +120,13 @@
                     </thead>
                     <tbody id="atletTableBody">
                         @foreach($stable->atlets as $atlet)
-                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition" data-atlet-id="{{ $atlet->id }}">
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition" 
+                            data-atlet-id="{{ $atlet->id }}"
+                            data-atlet-nama="{{ $atlet->nama }}"
+                            data-atlet-jenis="{{ $atlet->jenisKelamin ?? '' }}"
+                            data-atlet-level="{{ $atlet->level ?? '' }}"
+                            data-atlet-lahir="{{ $atlet->tanggal_lahir ?? '' }}"
+                            data-atlet-alamat="{{ $atlet->alamat ?? '' }}">
                             <td class="px-4 py-3 text-gray-900 font-medium">{{ $atlet->nama }}</td>
                             <td class="px-4 py-3 text-gray-700">{{ ucfirst($atlet->jenisKelamin ?? '-') }}</td>
                             <td class="px-4 py-3">
@@ -176,7 +182,14 @@
                     </thead>
                     <tbody id="kudaTableBody">
                         @foreach($stable->kuda as $k)
-                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition" data-kuda-id="{{ $k->id }}">
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition" 
+                            data-kuda-id="{{ $k->id }}"
+                            data-kuda-nama="{{ $k->nama }}"
+                            data-kuda-pasport="{{ $k->pasport ?? '' }}"
+                            data-kuda-prestasi="{{ $k->prestasi ?? '' }}"
+                            data-kuda-pemilik="{{ $k->pemilik ?? '' }}"
+                            data-kuda-jenis="{{ $k->jenis ?? '' }}"
+                            data-kuda-warna="{{ $k->warna ?? '' }}">
                             <td class="px-4 py-3 text-gray-900 font-medium">{{ $k->nama }}</td>
                             <td class="px-4 py-3 text-gray-700">{{ $k->pasport ?? '-' }}</td>
                             <td class="px-4 py-3 text-gray-700">{{ $k->prestasi ?? '-' }}</td>

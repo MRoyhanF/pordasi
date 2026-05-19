@@ -39,11 +39,20 @@ export const AtletManager = {
         if (e.target.classList.contains('editAtletBtn')) {
             const id = e.target.dataset.atletId;
             const row = e.target.closest('tr');
-            const cells = row.querySelectorAll('td');
             
-            document.querySelector('#atletForm [name="nama"]').value = cells[0].textContent;
-            document.querySelector('#atletForm [name="jenisKelamin"]').value = cells[1].textContent;
-            document.querySelector('#atletForm [name="level"]').value = cells[2].textContent.trim();
+            // Get data dari data attributes
+            const nama = row.dataset.atletNama || '';
+            const jenis = row.dataset.atletJenis || '';
+            const level = row.dataset.atletLevel || '';
+            const lahir = row.dataset.atletLahir || '';
+            const alamat = row.dataset.atletAlamat || '';
+            
+            // Populate form dengan semua data
+            document.querySelector('#atletForm [name="nama"]').value = nama;
+            document.querySelector('#atletForm [name="jenisKelamin"]').value = jenis;
+            document.querySelector('#atletForm [name="level"]').value = level;
+            document.querySelector('#atletForm [name="tanggal_lahir"]').value = lahir;
+            document.querySelector('#atletForm [name="alamat"]').value = alamat;
             
             document.getElementById('atletForm').dataset.id = id;
             document.getElementById('atletModalTitle').textContent = 'Edit Atlet';

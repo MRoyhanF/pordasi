@@ -8,6 +8,7 @@ use App\Models\Atlet;
 use App\Models\Pelatih;
 use App\Models\Kuda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StableController extends Controller
 {
@@ -25,7 +26,7 @@ class StableController extends Controller
         
         // AdminKabupaten can only manage stables in their kabupaten
         if ($user->role === 'AdminKabupaten') {
-            return \DB::table('admin_kabupaten')
+            return DB::table('admin_kabupaten')
                 ->where('idUser', $user->id)
                 ->where('idKabupaten', $stable->idKabupaten)
                 ->exists();
