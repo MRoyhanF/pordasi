@@ -24,9 +24,13 @@ class TableHandler {
     }
     
     init() {
-        // Ambil semua baris dari table
-        const rows = this.table.querySelectorAll('tbody tr:not(:last-child)');
-        this.allRows = Array.from(rows).map(row => ({
+        // Ambil semua baris dari table, kecuali empty state row
+        const rows = Array.from(this.table.querySelectorAll('tbody tr')).filter(row => {
+            // Skip empty state row yang berisi "Tidak ada data"
+            return !row.textContent.includes('Tidak ada data');
+        });
+        
+        this.allRows = rows.map(row => ({
             element: row,
             name: row.querySelector('td:nth-child(2) a')?.textContent?.toLowerCase() || '',
             html: row.innerHTML
