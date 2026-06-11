@@ -13,13 +13,14 @@ export function closeCreateModal() {
     document.getElementById('createModal').classList.add('modal-hidden');
 }
 
-export function openEditModal(userId, stableId, nama, isActive) {
+export function openEditModal(userId, stableId, nama, isActive, level) {
     document.getElementById('editModal').classList.remove('modal-hidden');
     document.getElementById('editUserId').value = userId;
     document.getElementById('editOldStableId').value = stableId;
     document.getElementById('editNama').value = nama || '';
     document.getElementById('editStableId').value = stableId;
     document.getElementById('editIsActive').checked = isActive === '1';
+    document.getElementById('editLevel').value = level || '';
     document.getElementById('editForm').action = `/pelatih/${userId}/${stableId}`;
     clearErrors('edit');
 }
@@ -72,7 +73,7 @@ export function confirmDelete() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return response.json();
     })
-    .then(data => {
+    .then(() => {
         closeDeleteModal();
         showToast('Pelatih berhasil dihapus!', 'success');
         setTimeout(() => window.location.reload(), 1000);
@@ -135,9 +136,7 @@ export function initModalEventListeners() {
             if (modal?.id === 'editModal') closeEditModal();
             if (modal?.id === 'deleteModal') closeDeleteModal();
         }
-        if (e.target.classList.contains('confirm-delete')) {
-            confirmDelete();
-        }
+        if (e.target.classList.contains('confirm-delete')) confirmDelete();
         if (e.target.id === 'createModal') closeCreateModal();
         if (e.target.id === 'editModal') closeEditModal();
         if (e.target.id === 'deleteModal') closeDeleteModal();

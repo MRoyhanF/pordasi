@@ -12,7 +12,7 @@ export function closeCreateModal() {
     document.getElementById('createModal').classList.add('modal-hidden');
 }
 
-export function openEditModal(id, stableId, nama, pemilik, pasport, prestasi) {
+export function openEditModal(id, stableId, nama, pemilik, pasport, prestasi, keahlian) {
     document.getElementById('editModal').classList.remove('modal-hidden');
     document.getElementById('editId').value = id;
     document.getElementById('editStable').value = stableId;
@@ -20,6 +20,7 @@ export function openEditModal(id, stableId, nama, pemilik, pasport, prestasi) {
     document.getElementById('editPemilik').value = pemilik || '';
     document.getElementById('editPasport').value = pasport || '';
     document.getElementById('editPrestasi').value = prestasi || '';
+    document.getElementById('editKeahlian').value = keahlian || '';
     document.getElementById('editForm').action = `/kuda/${id}`;
     clearErrors('edit');
 }
@@ -70,7 +71,7 @@ export function confirmDelete() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return response.json();
     })
-    .then(data => {
+    .then(() => {
         closeDeleteModal();
         showToast('Kuda berhasil dihapus!', 'success');
         setTimeout(() => window.location.reload(), 1000);
@@ -97,14 +98,9 @@ export async function loadStable() {
 
         stables.forEach(item => {
             const label = item.kabupaten ? `${item.nama} (${item.kabupaten.name})` : item.nama;
-
-            const opt1 = new Option(label, item.id);
-            const opt2 = new Option(label, item.id);
-            const opt3 = new Option(label, item.id);
-
-            createSelect.appendChild(opt1);
-            editSelect.appendChild(opt2);
-            filterSelect.appendChild(opt3);
+            createSelect.appendChild(new Option(label, item.id));
+            editSelect.appendChild(new Option(label, item.id));
+            filterSelect.appendChild(new Option(label, item.id));
         });
     } catch (error) {
         console.error('Error loading stable:', error);
@@ -120,9 +116,7 @@ export function initModalEventListeners() {
             if (modal?.id === 'editModal') closeEditModal();
             if (modal?.id === 'deleteModal') closeDeleteModal();
         }
-        if (e.target.classList.contains('confirm-delete')) {
-            confirmDelete();
-        }
+        if (e.target.classList.contains('confirm-delete')) confirmDelete();
         if (e.target.id === 'createModal') closeCreateModal();
         if (e.target.id === 'editModal') closeEditModal();
         if (e.target.id === 'deleteModal') closeDeleteModal();

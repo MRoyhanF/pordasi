@@ -55,6 +55,8 @@ class AtletController extends Controller
             'jenisKelamin'  => 'required|in:Pria,Wanita',
             'tanggal_lahir' => 'nullable|date',
             'alamat'        => 'nullable|string|max:255',
+            'status'        => 'required|in:aktif,tidak_aktif',
+            'prestasi'      => 'nullable|string',
         ], [
             'idStable.required'     => 'Stable harus dipilih',
             'idStable.exists'       => 'Stable tidak ditemukan',
@@ -63,6 +65,8 @@ class AtletController extends Controller
             'level.in'              => 'Level tidak valid',
             'jenisKelamin.required' => 'Jenis kelamin harus dipilih',
             'jenisKelamin.in'       => 'Jenis kelamin tidak valid',
+            'status.required'       => 'Status harus dipilih',
+            'status.in'             => 'Status tidak valid',
         ]);
 
         $stable = Stable::findOrFail($validated['idStable']);
@@ -89,6 +93,8 @@ class AtletController extends Controller
             'jenisKelamin'  => 'required|in:Pria,Wanita',
             'tanggal_lahir' => 'nullable|date',
             'alamat'        => 'nullable|string|max:255',
+            'status'        => 'required|in:aktif,tidak_aktif',
+            'prestasi'      => 'nullable|string',
         ], [
             'idStable.required'     => 'Stable harus dipilih',
             'idStable.exists'       => 'Stable tidak ditemukan',
@@ -97,6 +103,8 @@ class AtletController extends Controller
             'level.in'              => 'Level tidak valid',
             'jenisKelamin.required' => 'Jenis kelamin harus dipilih',
             'jenisKelamin.in'       => 'Jenis kelamin tidak valid',
+            'status.required'       => 'Status harus dipilih',
+            'status.in'             => 'Status tidak valid',
         ]);
 
         $stable = Stable::findOrFail($validated['idStable']);

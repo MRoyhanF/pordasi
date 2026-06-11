@@ -25,6 +25,20 @@
                     <p id="editStableIdError" class="text-red-600 text-sm mt-1"></p>
                 </div>
 
+                <!-- Level -->
+                <div>
+                    <label for="editLevel" class="block text-sm font-medium text-gray-700 mb-2">Level</label>
+                    <select id="editLevel" name="level" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="">-- Pilih Level --</option>
+                        <option value="pelopor">Pelopor</option>
+                        <option value="jelajah">Jelajah</option>
+                        <option value="sigap">Sigap</option>
+                        <option value="utama">Utama</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                    <p id="editLevelError" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
                 <!-- Status -->
                 <div class="flex items-center gap-3">
                     <input type="checkbox" id="editIsActive" name="isActive" value="1" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">

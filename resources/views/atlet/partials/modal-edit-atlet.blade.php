@@ -60,6 +60,20 @@
                     <p id="editLevelError" class="text-red-600 text-sm mt-1"></p>
                 </div>
 
+                <!-- Status -->
+                <div>
+                    <label for="editStatus" class="block text-sm font-medium text-gray-700 mb-2">
+                        Status <span class="text-red-500">*</span>
+                    </label>
+                    <select id="editStatus" name="status"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <option value="">-- Pilih Status --</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="tidak_aktif">Tidak Aktif</option>
+                    </select>
+                    <p id="editStatusError" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
                 <!-- Tanggal Lahir -->
                 <div>
                     <label for="editTanggalLahir" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Lahir</label>
@@ -74,6 +88,15 @@
                     <input type="text" id="editAlamat" name="alamat"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     <p id="editAlamatError" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
+                <!-- Prestasi -->
+                <div class="md:col-span-2">
+                    <label for="editPrestasi" class="block text-sm font-medium text-gray-700 mb-2">Prestasi</label>
+                    <textarea id="editPrestasi" name="prestasi" rows="3"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Prestasi atlet (opsional)"></textarea>
+                    <p id="editPrestasiError" class="text-red-600 text-sm mt-1"></p>
                 </div>
             </div>
 

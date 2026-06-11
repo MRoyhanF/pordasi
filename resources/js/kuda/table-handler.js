@@ -26,6 +26,8 @@ export class TableHandler {
     attachEventListeners() {
         this.searchInput.addEventListener('input', () => this.applyFilters());
         this.stableFilter.addEventListener('change', () => this.applyFilters());
+        this.keahlianFilter = document.getElementById('keahlianFilter');
+        if (this.keahlianFilter) this.keahlianFilter.addEventListener('change', () => this.applyFilters());
         this.itemsPerPageSelect.addEventListener('change', () => {
             this.itemsPerPage = parseInt(this.itemsPerPageSelect.value);
             this.currentPage = 1;
@@ -39,11 +41,13 @@ export class TableHandler {
     applyFilters() {
         const search = this.searchInput.value.toLowerCase();
         const stableId = this.stableFilter.value;
+        const keahlian = this.keahlianFilter ? this.keahlianFilter.value : '';
 
         this.filteredRows = this.allRows.filter(row => {
             const stableMatch = !stableId || row.dataset.stableId === stableId;
+            const keahlianMatch = !keahlian || row.dataset.keahlian === keahlian;
             const searchMatch = !search || row.textContent.toLowerCase().includes(search);
-            return stableMatch && searchMatch;
+            return stableMatch && keahlianMatch && searchMatch;
         });
 
         this.currentPage = 1;
@@ -53,6 +57,7 @@ export class TableHandler {
     handleClearFilter() {
         this.searchInput.value = '';
         this.stableFilter.value = '';
+        if (this.keahlianFilter) this.keahlianFilter.value = '';
         this.itemsPerPageSelect.value = '10';
         this.itemsPerPage = 10;
         this.currentPage = 1;

@@ -18,12 +18,12 @@ function setupAnimations() {
         }
         .animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
         .modal-hidden { display: none !important; }
+        .input-error { border-color: #ef4444 !important; }
     `;
     document.head.appendChild(style);
 }
 
 function setupFormHandlers() {
-    // Create
     document.getElementById('createForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -61,7 +61,6 @@ function setupFormHandlers() {
         }
     });
 
-    // Edit
     document.getElementById('editForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const userId = document.getElementById('editUserId').value;
@@ -114,6 +113,7 @@ function setupButtonHandlers() {
                 btn.dataset.stableId,
                 btn.dataset.nama,
                 btn.dataset.isActive,
+                btn.dataset.level,
             );
         }
         if (e.target.closest('.delete-btn')) {

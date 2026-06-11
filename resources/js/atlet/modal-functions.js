@@ -12,7 +12,7 @@ export function closeCreateModal() {
     document.getElementById('createModal').classList.add('modal-hidden');
 }
 
-export function openEditModal(id, stableId, nama, jenisKelamin, level, tanggalLahir, alamat) {
+export function openEditModal(id, stableId, nama, jenisKelamin, level, tanggalLahir, alamat, status, prestasi) {
     document.getElementById('editModal').classList.remove('modal-hidden');
     document.getElementById('editId').value = id;
     document.getElementById('editStable').value = stableId;
@@ -21,6 +21,8 @@ export function openEditModal(id, stableId, nama, jenisKelamin, level, tanggalLa
     document.getElementById('editLevel').value = level || '';
     document.getElementById('editTanggalLahir').value = tanggalLahir || '';
     document.getElementById('editAlamat').value = alamat || '';
+    document.getElementById('editStatus').value = status || 'aktif';
+    document.getElementById('editPrestasi').value = prestasi || '';
     document.getElementById('editForm').action = `/atlet/${id}`;
     clearErrors('edit');
 }
@@ -41,13 +43,13 @@ export function closeDeleteModal() {
 }
 
 const errorIds = {
-    create: ['createIdStableError', 'createNamaError', 'createJenisKelaminError', 'createLevelError', 'createTanggalLahirError', 'createAlamatError'],
-    edit:   ['editIdStableError', 'editNamaError', 'editJenisKelaminError', 'editLevelError', 'editTanggalLahirError', 'editAlamatError'],
+    create: ['createIdStableError', 'createNamaError', 'createJenisKelaminError', 'createLevelError', 'createStatusError', 'createTanggalLahirError', 'createAlamatError', 'createPrestasiError'],
+    edit:   ['editIdStableError', 'editNamaError', 'editJenisKelaminError', 'editLevelError', 'editStatusError', 'editTanggalLahirError', 'editAlamatError', 'editPrestasiError'],
 };
 
 const inputIds = {
-    create: ['createStable', 'createNama', 'createJenisKelamin', 'createLevel', 'createTanggalLahir', 'createAlamat'],
-    edit:   ['editStable', 'editNama', 'editJenisKelamin', 'editLevel', 'editTanggalLahir', 'editAlamat'],
+    create: ['createStable', 'createNama', 'createJenisKelamin', 'createLevel', 'createStatus', 'createTanggalLahir', 'createAlamat', 'createPrestasi'],
+    edit:   ['editStable', 'editNama', 'editJenisKelamin', 'editLevel', 'editStatus', 'editTanggalLahir', 'editAlamat', 'editPrestasi'],
 };
 
 function clearErrors(prefix) {

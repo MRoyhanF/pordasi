@@ -28,16 +28,20 @@ const errorFieldMap = {
         nama:          'createNamaError',
         jenisKelamin:  'createJenisKelaminError',
         level:         'createLevelError',
+        status:        'createStatusError',
         tanggal_lahir: 'createTanggalLahirError',
         alamat:        'createAlamatError',
+        prestasi:      'createPrestasiError',
     },
     edit: {
         idStable:      'editIdStableError',
         nama:          'editNamaError',
         jenisKelamin:  'editJenisKelaminError',
         level:         'editLevelError',
+        status:        'editStatusError',
         tanggal_lahir: 'editTanggalLahirError',
         alamat:        'editAlamatError',
+        prestasi:      'editPrestasiError',
     },
 };
 
@@ -47,16 +51,20 @@ const inputFieldMap = {
         nama:          'createNama',
         jenisKelamin:  'createJenisKelamin',
         level:         'createLevel',
+        status:        'createStatus',
         tanggal_lahir: 'createTanggalLahir',
         alamat:        'createAlamat',
+        prestasi:      'createPrestasi',
     },
     edit: {
         idStable:      'editStable',
         nama:          'editNama',
         jenisKelamin:  'editJenisKelamin',
         level:         'editLevel',
+        status:        'editStatus',
         tanggal_lahir: 'editTanggalLahir',
         alamat:        'editAlamat',
+        prestasi:      'editPrestasi',
     },
 };
 
@@ -96,7 +104,6 @@ function clearFieldErrors(prefix) {
 }
 
 function setupFormHandlers() {
-    // Create
     document.getElementById('createForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         clearFieldErrors('create');
@@ -133,7 +140,6 @@ function setupFormHandlers() {
         }
     });
 
-    // Edit
     document.getElementById('editForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         clearFieldErrors('edit');
@@ -171,9 +177,8 @@ function setupFormHandlers() {
         }
     });
 
-    // Hapus highlight merah saat user mengubah input
-    ['createStable', 'createNama', 'createJenisKelamin', 'createLevel', 'createTanggalLahir', 'createAlamat',
-     'editStable', 'editNama', 'editJenisKelamin', 'editLevel', 'editTanggalLahir', 'editAlamat'].forEach(id => {
+    ['createStable', 'createNama', 'createJenisKelamin', 'createLevel', 'createStatus', 'createTanggalLahir', 'createAlamat', 'createPrestasi',
+     'editStable', 'editNama', 'editJenisKelamin', 'editLevel', 'editStatus', 'editTanggalLahir', 'editAlamat', 'editPrestasi'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.addEventListener('input', () => el.classList.remove('input-error'));
@@ -197,6 +202,8 @@ function setupButtonHandlers() {
                 btn.dataset.level,
                 btn.dataset.tanggalLahir,
                 btn.dataset.alamat,
+                btn.dataset.status,
+                btn.dataset.prestasi,
             );
         }
         if (e.target.closest('.delete-btn')) {

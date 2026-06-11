@@ -9,7 +9,7 @@ class Pelatih extends Model
     protected $table = 'pelatih';
     public $timestamps = false;
     
-    protected $fillable = ['userId', 'stableId', 'isActive'];
+    protected $fillable = ['userId', 'stableId', 'isActive', 'level'];
     protected $primaryKey = ['userId', 'stableId'];
     public $incrementing = false;
     protected $keyType = 'array';

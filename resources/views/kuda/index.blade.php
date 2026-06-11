@@ -22,7 +22,7 @@
 <div class="p-4 sm:p-6 lg:p-8 flex flex-col">
     <!-- Filter Bar -->
     <div class="bg-white rounded-lg shadow mb-6 p-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <!-- Search -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Cari Kuda</label>
@@ -42,6 +42,21 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
                     <option value="">Semua Stable</option>
+                </select>
+            </div>
+
+            <!-- Filter Keahlian -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Filter Keahlian</label>
+                <select
+                    id="keahlianFilter"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                >
+                    <option value="">Semua Keahlian</option>
+                    <option value="berkuda_memanah">Berkuda Memanah</option>
+                    <option value="jumping">Jumping</option>
+                    <option value="dressage">Dressage</option>
+                    <option value="polo">Polo</option>
                 </select>
             </div>
 
@@ -73,6 +88,7 @@
 
     <!-- Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
+        <div class="overflow-x-auto">
         <table id="kudaTable" class="w-full">
             <thead>
                 <tr>
@@ -82,19 +98,33 @@
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Kabupaten</th>
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Pemilik</th>
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Pasport</th>
+                    <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Keahlian</th>
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Prestasi</th>
                     <th class="text-center px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Aksi</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
                 @forelse($kuda as $item)
-                <tr class="hover:bg-gray-50 border-b border-gray-100 transition" data-stable-id="{{ $item->stable }}">
+                <tr class="hover:bg-gray-50 border-b border-gray-100 transition"
+                    data-stable-id="{{ $item->stable }}"
+                    data-keahlian="{{ $item->keahlian }}">
                     <td class="px-4 py-3 text-sm text-gray-500">{{ $loop->iteration }}</td>
                     <td class="px-4 py-3 font-medium text-gray-800">{{ $item->nama }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->stableData->nama ?? '-' }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->stableData->kabupaten->name ?? '-' }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->pemilik ?? '-' }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->pasport ?? '-' }}</td>
+                    <td class="px-4 py-3 text-sm text-gray-600">
+                        @php
+                            $keahlianLabel = [
+                                'berkuda_memanah' => 'Berkuda Memanah',
+                                'jumping'         => 'Jumping',
+                                'dressage'        => 'Dressage',
+                                'polo'            => 'Polo',
+                            ];
+                        @endphp
+                        {{ $keahlianLabel[$item->keahlian] ?? '-' }}
+                    </td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->prestasi ?? '-' }}</td>
                     <td class="px-4 py-3 text-center">
                         <div class="flex items-center justify-center gap-2">
@@ -105,6 +135,7 @@
                                 data-pemilik="{{ $item->pemilik }}"
                                 data-pasport="{{ $item->pasport }}"
                                 data-prestasi="{{ $item->prestasi }}"
+                                data-keahlian="{{ $item->keahlian }}"
                                 title="Edit">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
@@ -123,11 +154,12 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="text-center text-gray-500 py-8 text-sm">Tidak ada data kuda</td>
+                    <td colspan="9" class="text-center text-gray-500 py-8 text-sm">Tidak ada data kuda</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
+        </div>
 
         <!-- Pagination -->
         <div class="flex flex-col sm:flex-row items-center justify-between px-4 py-4 bg-gray-50 border-t border-gray-100 gap-4">

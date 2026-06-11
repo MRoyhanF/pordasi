@@ -24,6 +24,20 @@
                     <p id="createStableIdError" class="text-red-600 text-sm mt-1"></p>
                 </div>
 
+                <!-- Level -->
+                <div>
+                    <label for="createLevel" class="block text-sm font-medium text-gray-700 mb-2">Level</label>
+                    <select id="createLevel" name="level" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="">-- Pilih Level --</option>
+                        <option value="pelopor">Pelopor</option>
+                        <option value="jelajah">Jelajah</option>
+                        <option value="sigap">Sigap</option>
+                        <option value="utama">Utama</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                    <p id="createLevelError" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
                 <!-- Status -->
                 <div class="flex items-center gap-3">
                     <input type="checkbox" id="createIsActive" name="isActive" value="1" checked class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">

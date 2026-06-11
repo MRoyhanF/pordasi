@@ -5,6 +5,7 @@ export class TableHandler {
         this.itemsPerPageSelect = document.getElementById('itemsPerPage');
         this.searchInput = document.getElementById('searchInput');
         this.stableFilter = document.getElementById('stableFilter');
+        this.statusFilter = document.getElementById('statusFilter');
         this.clearFilterBtn = document.getElementById('clearFilter');
         this.pageNumbers = document.getElementById('pageNumbers');
         this.prevBtn = document.getElementById('prevBtn');
@@ -26,6 +27,7 @@ export class TableHandler {
     attachEventListeners() {
         this.searchInput.addEventListener('input', () => this.applyFilters());
         this.stableFilter.addEventListener('change', () => this.applyFilters());
+        if (this.statusFilter) this.statusFilter.addEventListener('change', () => this.applyFilters());
         this.itemsPerPageSelect.addEventListener('change', () => {
             this.itemsPerPage = parseInt(this.itemsPerPageSelect.value);
             this.currentPage = 1;
@@ -39,11 +41,13 @@ export class TableHandler {
     applyFilters() {
         const search = this.searchInput.value.toLowerCase();
         const stableId = this.stableFilter.value;
+        const status = this.statusFilter ? this.statusFilter.value : '';
 
         this.filteredRows = this.allRows.filter(row => {
             const stableMatch = !stableId || row.dataset.stableId === stableId;
+            const statusMatch = !status || row.dataset.status === status;
             const searchMatch = !search || row.textContent.toLowerCase().includes(search);
-            return stableMatch && searchMatch;
+            return stableMatch && statusMatch && searchMatch;
         });
 
         this.currentPage = 1;
@@ -53,6 +57,7 @@ export class TableHandler {
     handleClearFilter() {
         this.searchInput.value = '';
         this.stableFilter.value = '';
+        if (this.statusFilter) this.statusFilter.value = '';
         this.itemsPerPageSelect.value = '10';
         this.itemsPerPage = 10;
         this.currentPage = 1;
@@ -75,7 +80,7 @@ export class TableHandler {
 
         if (paginated.length === 0) {
             const row = document.createElement('tr');
-            row.innerHTML = `<td colspan="8" class="text-center text-gray-500 py-8 text-sm">Tidak ada data atlet</td>`;
+            row.innerHTML = `<td colspan="10" class="text-center text-gray-500 py-8 text-sm">Tidak ada data atlet</td>`;
             this.tbody.appendChild(row);
         } else {
             paginated.forEach((row, index) => {

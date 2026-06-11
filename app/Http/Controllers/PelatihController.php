@@ -54,11 +54,13 @@ class PelatihController extends Controller
             'userId'   => 'required|exists:users,id',
             'stableId' => 'required|exists:stable,id',
             'isActive' => 'boolean',
+            'level'    => 'nullable|in:pelopor,jelajah,sigap,utama,lainnya',
         ], [
             'userId.required'   => 'Pengguna harus dipilih',
             'userId.exists'     => 'Pengguna tidak ditemukan',
             'stableId.required' => 'Stable harus dipilih',
             'stableId.exists'   => 'Stable tidak ditemukan',
+            'level.in'          => 'Level tidak valid',
         ]);
 
         abort_if(!$this->canManageStable($validated['stableId']), 403);
@@ -91,13 +93,16 @@ class PelatihController extends Controller
         $validated = $request->validate([
             'stableId' => 'required|exists:stable,id',
             'isActive' => 'boolean',
+            'level'    => 'nullable|in:pelopor,jelajah,sigap,utama,lainnya',
         ], [
             'stableId.required' => 'Stable harus dipilih',
             'stableId.exists'   => 'Stable tidak ditemukan',
+            'level.in'          => 'Level tidak valid',
         ]);
 
         $newStableId = $validated['stableId'];
         $isActive    = $request->boolean('isActive', true);
+        $level       = $validated['level'] ?? null;
 
         abort_if(!$this->canManageStable($stableId), 403);
         if ((string) $newStableId !== (string) $stableId) {
@@ -123,11 +128,12 @@ class PelatihController extends Controller
                 'userId'   => $userId,
                 'stableId' => $newStableId,
                 'isActive' => $isActive,
+                'level'    => $level,
             ]);
         } else {
             Pelatih::where('userId', $userId)
                 ->where('stableId', $stableId)
-                ->update(['isActive' => $isActive]);
+                ->update(['isActive' => $isActive, 'level' => $level]);
 
             $pelatih = Pelatih::where('userId', $userId)
                 ->where('stableId', $stableId)

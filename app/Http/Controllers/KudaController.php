@@ -50,15 +50,17 @@ class KudaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'stable' => 'required|exists:stable,id',
-            'nama'   => 'required|string|max:255',
+            'stable'   => 'required|exists:stable,id',
+            'nama'     => 'required|string|max:255',
             'pasport'  => 'nullable|string|max:255',
             'prestasi' => 'nullable|string',
             'pemilik'  => 'nullable|string|max:255',
+            'keahlian' => 'nullable|in:berkuda_memanah,jumping,dressage,polo',
         ], [
-            'stable.required' => 'Stable harus dipilih',
-            'stable.exists'   => 'Stable tidak ditemukan',
-            'nama.required'   => 'Nama kuda harus diisi',
+            'stable.required'  => 'Stable harus dipilih',
+            'stable.exists'    => 'Stable tidak ditemukan',
+            'nama.required'    => 'Nama kuda harus diisi',
+            'keahlian.in'      => 'Keahlian tidak valid',
         ]);
 
         $stable = Stable::findOrFail($validated['stable']);
@@ -79,15 +81,17 @@ class KudaController extends Controller
         $kuda = Kuda::findOrFail($id);
 
         $validated = $request->validate([
-            'stable' => 'required|exists:stable,id',
-            'nama'   => 'required|string|max:255',
+            'stable'   => 'required|exists:stable,id',
+            'nama'     => 'required|string|max:255',
             'pasport'  => 'nullable|string|max:255',
             'prestasi' => 'nullable|string',
             'pemilik'  => 'nullable|string|max:255',
+            'keahlian' => 'nullable|in:berkuda_memanah,jumping,dressage,polo',
         ], [
-            'stable.required' => 'Stable harus dipilih',
-            'stable.exists'   => 'Stable tidak ditemukan',
-            'nama.required'   => 'Nama kuda harus diisi',
+            'stable.required'  => 'Stable harus dipilih',
+            'stable.exists'    => 'Stable tidak ditemukan',
+            'nama.required'    => 'Nama kuda harus diisi',
+            'keahlian.in'      => 'Keahlian tidak valid',
         ]);
 
         $stable = Stable::findOrFail($validated['stable']);

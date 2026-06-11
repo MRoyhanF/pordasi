@@ -22,7 +22,7 @@
 <div class="p-4 sm:p-6 lg:p-8 flex flex-col">
     <!-- Filter Bar -->
     <div class="bg-white rounded-lg shadow mb-6 p-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <!-- Search -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Cari Pelatih</label>
@@ -42,6 +42,22 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
                     <option value="">Semua Stable</option>
+                </select>
+            </div>
+
+            <!-- Filter Level -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Filter Level</label>
+                <select
+                    id="levelFilter"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                >
+                    <option value="">Semua Level</option>
+                    <option value="pelopor">Pelopor</option>
+                    <option value="jelajah">Jelajah</option>
+                    <option value="sigap">Sigap</option>
+                    <option value="utama">Utama</option>
+                    <option value="lainnya">Lainnya</option>
                 </select>
             </div>
 
@@ -73,6 +89,7 @@
 
     <!-- Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
+        <div class="overflow-x-auto">
         <table id="pelatihTable" class="w-full">
             <thead>
                 <tr>
@@ -81,6 +98,7 @@
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Email</th>
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Stable</th>
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Kabupaten</th>
+                    <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Level</th>
                     <th class="text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Status</th>
                     <th class="text-center px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border-b">Aksi</th>
                 </tr>
@@ -88,12 +106,25 @@
             <tbody id="tableBody">
                 @forelse($pelatih as $item)
                 <tr class="hover:bg-gray-50 border-b border-gray-100 transition"
-                    data-stable-id="{{ $item->stableId }}">
+                    data-stable-id="{{ $item->stableId }}"
+                    data-level="{{ $item->level }}">
                     <td class="px-4 py-3 text-sm text-gray-500">{{ $loop->iteration }}</td>
                     <td class="px-4 py-3 font-medium text-gray-800">{{ $item->user->name ?? '-' }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->user->email ?? '-' }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->stable->nama ?? '-' }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $item->stable->kabupaten->name ?? '-' }}</td>
+                    <td class="px-4 py-3 text-sm text-gray-600">
+                        @php
+                            $levelLabel = [
+                                'pelopor' => 'Pelopor',
+                                'jelajah' => 'Jelajah',
+                                'sigap'   => 'Sigap',
+                                'utama'   => 'Utama',
+                                'lainnya' => 'Lainnya',
+                            ];
+                        @endphp
+                        {{ $levelLabel[$item->level] ?? '-' }}
+                    </td>
                     <td class="px-4 py-3 text-sm">
                         @if($item->isActive)
                             <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Aktif</span>
@@ -108,6 +139,7 @@
                                 data-stable-id="{{ $item->stableId }}"
                                 data-nama="{{ $item->user->name ?? '' }}"
                                 data-is-active="{{ $item->isActive ? '1' : '0' }}"
+                                data-level="{{ $item->level }}"
                                 title="Edit">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
@@ -127,11 +159,12 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center text-gray-500 py-8 text-sm">Tidak ada data pelatih</td>
+                    <td colspan="8" class="text-center text-gray-500 py-8 text-sm">Tidak ada data pelatih</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
+        </div>
 
         <!-- Pagination -->
         <div class="flex flex-col sm:flex-row items-center justify-between px-4 py-4 bg-gray-50 border-t border-gray-100 gap-4">

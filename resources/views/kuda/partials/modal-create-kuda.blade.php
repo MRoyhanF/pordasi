@@ -36,6 +36,19 @@
                     <p id="createPasportError" class="text-red-600 text-sm mt-1"></p>
                 </div>
 
+                <!-- Keahlian -->
+                <div>
+                    <label for="createKeahlian" class="block text-sm font-medium text-gray-700 mb-2">Keahlian</label>
+                    <select id="createKeahlian" name="keahlian" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="">-- Pilih Keahlian --</option>
+                        <option value="berkuda_memanah">Berkuda Memanah</option>
+                        <option value="jumping">Jumping</option>
+                        <option value="dressage">Dressage</option>
+                        <option value="polo">Polo</option>
+                    </select>
+                    <p id="createKeahlianError" class="text-red-600 text-sm mt-1"></p>
+                </div>
+
                 <!-- Prestasi -->
                 <div>
                     <label for="createPrestasi" class="block text-sm font-medium text-gray-700 mb-2">Prestasi</label>
