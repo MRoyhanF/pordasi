@@ -37,36 +37,28 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // SuperAdmin Routes
-    Route::middleware('role:SuperAdmin')->group(function () {
-        Route::resource('kabupaten', KabupatenController::class);
-        
-        // Stable Routes (define specific routes BEFORE resource)
+    // Shared routes for SuperAdmin and Admin
+    Route::middleware('role:SuperAdmin,Admin')->group(function () {
+        // Stable
         Route::get('/stable/get-kabupaten', [StableController::class, 'getKabupaten'])->name('stable.get-kabupaten');
         Route::get('/stable/kabupaten/{kabupatanId}', [StableController::class, 'getByKabupaten'])->name('stable.by-kabupaten');
         Route::resource('stable', StableController::class);
-        
-        // Atlet CRUD under stable
         Route::post('/stable/{stable}/atlet', [StableController::class, 'storeAtlet'])->name('stable.atlet.store');
         Route::put('/stable/{stable}/atlet/{atlet}', [StableController::class, 'updateAtlet'])->name('stable.atlet.update');
         Route::delete('/stable/{stable}/atlet/{atlet}', [StableController::class, 'destroyAtlet'])->name('stable.atlet.destroy');
-        
-        // Kuda CRUD under stable
         Route::post('/stable/{stable}/kuda', [StableController::class, 'storeKuda'])->name('stable.kuda.store');
         Route::put('/stable/{stable}/kuda/{kuda}', [StableController::class, 'updateKuda'])->name('stable.kuda.update');
         Route::delete('/stable/{stable}/kuda/{kuda}', [StableController::class, 'destroyKuda'])->name('stable.kuda.destroy');
-        
-        // Pelatih CRUD under stable
         Route::get('/stable/{stable}/pelatih/users', [StableController::class, 'getPelatihUsers'])->name('stable.pelatih.users');
         Route::post('/stable/{stable}/pelatih', [StableController::class, 'storePelatih'])->name('stable.pelatih.store');
         Route::put('/stable/{stable}/pelatih/{user}', [StableController::class, 'updatePelatih'])->name('stable.pelatih.update');
         Route::delete('/stable/{stable}/pelatih/{user}', [StableController::class, 'destroyPelatih'])->name('stable.pelatih.destroy');
-        
-        // Kuda Routes
+
+        // Kuda
         Route::get('/kuda/get-stable', [KudaController::class, 'getStable'])->name('kuda.get-stable');
         Route::resource('kuda', KudaController::class)->only(['index', 'store', 'update', 'destroy']);
 
-        // Pelatih Routes
+        // Pelatih
         Route::get('/pelatih/get-users', [PelatihController::class, 'getUsers'])->name('pelatih.get-users');
         Route::get('/pelatih/get-stable', [PelatihController::class, 'getStable'])->name('pelatih.get-stable');
         Route::get('/pelatih', [PelatihController::class, 'index'])->name('pelatih.index');
@@ -74,14 +66,19 @@ Route::middleware('auth')->group(function () {
         Route::put('/pelatih/{userId}/{stableId}', [PelatihController::class, 'update'])->name('pelatih.update');
         Route::delete('/pelatih/{userId}/{stableId}', [PelatihController::class, 'destroy'])->name('pelatih.destroy');
 
-        // Atlet Routes
+        // Atlet
         Route::get('/atlet/get-stable', [AtletController::class, 'getStable'])->name('atlet.get-stable');
         Route::resource('atlet', AtletController::class)->only(['index', 'store', 'update', 'destroy']);
+    });
+
+    // SuperAdmin-only Routes
+    Route::middleware('role:SuperAdmin')->group(function () {
+        Route::resource('kabupaten', KabupatenController::class);
 
         // Pengguna (User Management)
         Route::resource('pengguna', UserController::class)->only(['index', 'store', 'update', 'destroy']);
 
-        // Admin Kabupaten Management (nested under kabupaten)
+        // Admin Kabupaten Management
         Route::get('/kabupaten/{kabupatanId}/admin/get-users', [AdminKabupatentController::class, 'getUsers'])->name('admin-kabupaten.get-users');
         Route::post('/kabupaten/{kabupatanId}/admin', [AdminKabupatentController::class, 'store'])->name('admin-kabupaten.store');
         Route::get('/kabupaten/{kabupatanId}/admin/{userId}', [AdminKabupatentController::class, 'getAdmin'])->name('admin-kabupaten.get');

@@ -6,12 +6,40 @@ use App\Models\Kuda;
 use App\Models\Stable;
 use App\Models\Kabupaten;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KudaController extends Controller
 {
+    private function getAdminKabupatanIds()
+    {
+        return DB::table('admin_kabupaten')
+            ->where('idUser', auth()->id())
+            ->where('isActive', true)
+            ->pluck('idKabupaten')
+            ->toArray();
+    }
+
+    private function canManageStable($stable)
+    {
+        $user = auth()->user();
+        if ($user->role === 'SuperAdmin') return true;
+        if ($user->role === 'Admin') {
+            return in_array($stable->idKabupaten, $this->getAdminKabupatanIds());
+        }
+        return false;
+    }
+
     public function index(Request $request)
     {
-        $kuda = Kuda::with('stableData.kabupaten')->get();
+        $user = auth()->user();
+
+        if ($user->role === 'Admin') {
+            $kabupatanIds = $this->getAdminKabupatanIds();
+            $stableIds = Stable::whereIn('idKabupaten', $kabupatanIds)->pluck('id');
+            $kuda = Kuda::with('stableData.kabupaten')->whereIn('stable', $stableIds)->get();
+        } else {
+            $kuda = Kuda::with('stableData.kabupaten')->get();
+        }
 
         return view('kuda.index', [
             'title' => 'Data Kuda',
@@ -32,6 +60,9 @@ class KudaController extends Controller
             'stable.exists'   => 'Stable tidak ditemukan',
             'nama.required'   => 'Nama kuda harus diisi',
         ]);
+
+        $stable = Stable::findOrFail($validated['stable']);
+        abort_if(!$this->canManageStable($stable), 403);
 
         $kuda = Kuda::create($validated);
         $kuda->load('stableData.kabupaten');
@@ -59,6 +90,9 @@ class KudaController extends Controller
             'nama.required'   => 'Nama kuda harus diisi',
         ]);
 
+        $stable = Stable::findOrFail($validated['stable']);
+        abort_if(!$this->canManageStable($stable), 403);
+
         $kuda->update($validated);
         $kuda->load('stableData.kabupaten');
 
@@ -72,6 +106,8 @@ class KudaController extends Controller
     public function destroy($id)
     {
         $kuda = Kuda::findOrFail($id);
+        $stable = Stable::findOrFail($kuda->stable);
+        abort_if(!$this->canManageStable($stable), 403);
         $kuda->delete();
 
         return response()->json([
@@ -82,7 +118,13 @@ class KudaController extends Controller
 
     public function getStable()
     {
-        $stables = Stable::with('kabupaten')->get(['id', 'nama', 'idKabupaten']);
+        $user = auth()->user();
+        if ($user->role === 'Admin') {
+            $kabupatanIds = $this->getAdminKabupatanIds();
+            $stables = Stable::with('kabupaten')->whereIn('idKabupaten', $kabupatanIds)->get(['id', 'nama', 'idKabupaten']);
+        } else {
+            $stables = Stable::with('kabupaten')->get(['id', 'nama', 'idKabupaten']);
+        }
         return response()->json($stables);
     }
 }

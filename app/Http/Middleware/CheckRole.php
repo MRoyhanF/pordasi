@@ -15,9 +15,9 @@ class CheckRole
      * @param  string  $role
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, string ...$roles)
     {
-        if ($request->user() && $request->user()->role === $role) {
+        if ($request->user() && in_array($request->user()->role, $roles)) {
             return $next($request);
         }
 

@@ -22,7 +22,7 @@
 <div class="p-4 sm:p-6 lg:p-8 flex flex-col">
     <!-- Filter Bar -->
     <div class="bg-white rounded-lg shadow mb-6 p-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 {{ Auth::user()->role === 'SuperAdmin' ? 'lg:grid-cols-4' : 'lg:grid-cols-3' }} gap-4">
             <!-- Search Filter -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Cari Stable</label>
@@ -34,16 +34,20 @@
                 >
             </div>
 
-            <!-- Filter by Kabupaten -->
+            <!-- Filter by Kabupaten (SuperAdmin only) -->
+            @if(Auth::user()->role === 'SuperAdmin')
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Filter Kabupaten</label>
-                <select 
-                    id="kabupatenFilter" 
+                <select
+                    id="kabupatenFilter"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
                     <option value="">Semua Kabupaten</option>
                 </select>
             </div>
+            @else
+            <div id="kabupatenFilter" class="hidden"></div>
+            @endif
             
             <!-- Rows Per Page -->
             <div>

@@ -38,9 +38,25 @@ class StableController extends Controller
     /**
      * Display a listing of all stables with statistics
      */
+    private function getAdminKabupatanIds()
+    {
+        return DB::table('admin_kabupaten')
+            ->where('idUser', auth()->id())
+            ->where('isActive', true)
+            ->pluck('idKabupaten')
+            ->toArray();
+    }
+
     public function index(Request $request)
     {
-        $stables = Stable::with('kabupaten')->get();
+        $user = auth()->user();
+
+        if ($user->role === 'Admin') {
+            $kabupatanIds = $this->getAdminKabupatanIds();
+            $stables = Stable::with('kabupaten')->whereIn('idKabupaten', $kabupatanIds)->get();
+        } else {
+            $stables = Stable::with('kabupaten')->get();
+        }
 
         return view('stable.index', [
             'title' => 'Data Stable',
@@ -181,15 +197,25 @@ class StableController extends Controller
      */
     public function getKabupaten()
     {
-        $kabupaten = Kabupaten::all();
+        $user = auth()->user();
+        if ($user->role === 'Admin') {
+            $ids = $this->getAdminKabupatanIds();
+            $kabupaten = Kabupaten::whereIn('id', $ids)->get();
+        } else {
+            $kabupaten = Kabupaten::all();
+        }
         return response()->json($kabupaten);
     }
 
-    /**
-     * Get stables by kabupaten
-     */
     public function getByKabupaten($kabupatanId)
     {
+        $user = auth()->user();
+        if ($user->role === 'Admin') {
+            $ids = $this->getAdminKabupatanIds();
+            if (!in_array($kabupatanId, $ids)) {
+                return response()->json([]);
+            }
+        }
         $stables = Stable::where('idKabupaten', $kabupatanId)->get();
         return response()->json($stables);
     }
