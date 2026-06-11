@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KabupatenController;
 use App\Http\Controllers\AdminKabupatentController;
 use App\Http\Controllers\StableController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +59,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/stable/{stable}/pelatih/{user}', [StableController::class, 'updatePelatih'])->name('stable.pelatih.update');
         Route::delete('/stable/{stable}/pelatih/{user}', [StableController::class, 'destroyPelatih'])->name('stable.pelatih.destroy');
         
+        // Pengguna (User Management)
+        Route::resource('pengguna', UserController::class)->only(['index', 'store', 'update', 'destroy']);
+
         // Admin Kabupaten Management (nested under kabupaten)
         Route::get('/kabupaten/{kabupatanId}/admin/get-users', [AdminKabupatentController::class, 'getUsers'])->name('admin-kabupaten.get-users');
         Route::post('/kabupaten/{kabupatanId}/admin', [AdminKabupatentController::class, 'store'])->name('admin-kabupaten.store');

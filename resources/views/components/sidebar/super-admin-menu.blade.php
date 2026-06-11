@@ -42,7 +42,7 @@
         Kabupaten / Kota
     </a>
 
-    <a href="#" class="block px-3 sm:px-4 py-2 text-gray-300 hover:bg-gray-800 rounded-lg transition text-sm sm:text-base">
+    <a href="{{ route('pengguna.index') }}" class="block px-3 sm:px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request()->routeIs('pengguna.*') ? 'bg-green-600 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
         <svg class="w-4 h-4 sm:w-5 sm:h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v2a2 2 0 002 2h10a2 2 0 002-2zm-7 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm8-2a1 1 0 11-2 0 1 1 0 012 0zM9 5a1 1 0 11-2 0 1 1 0 012 0z"/>
         </svg>
