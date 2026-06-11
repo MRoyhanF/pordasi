@@ -236,6 +236,8 @@ class StableController extends Controller
             'jenisKelamin' => 'required|in:Pria,Wanita',
             'tanggal_lahir' => 'nullable|date',
             'alamat' => 'nullable|string',
+            'status' => 'required|in:aktif,tidak_aktif',
+            'prestasi' => 'nullable|string',
         ]);
 
         $validated['idStable'] = $stableId;
@@ -264,6 +266,8 @@ class StableController extends Controller
             'jenisKelamin' => 'required|in:Pria,Wanita',
             'tanggal_lahir' => 'nullable|date',
             'alamat' => 'nullable|string',
+            'status' => 'required|in:aktif,tidak_aktif',
+            'prestasi' => 'nullable|string',
         ]);
 
         $atlet->update($validated);
@@ -306,6 +310,7 @@ class StableController extends Controller
             'pasport' => 'nullable|string|max:255',
             'prestasi' => 'nullable|string',
             'pemilik' => 'nullable|string|max:255',
+            'keahlian' => 'nullable|string|max:255',
         ]);
 
         $validated['stable'] = $stableId;
@@ -333,6 +338,7 @@ class StableController extends Controller
             'pasport' => 'nullable|string|max:255',
             'prestasi' => 'nullable|string',
             'pemilik' => 'nullable|string|max:255',
+            'keahlian' => 'nullable|string|max:255',
         ]);
 
         $kuda->update($validated);
@@ -386,13 +392,26 @@ class StableController extends Controller
         abort_if(!$this->canManageStable($stable), 403);
 
         $validated = $request->validate([
-            'userId' => 'required|exists:users,id|unique:pelatih,userId,NULL,id,stableId,' . $stableId,
+            'userId' => 'required|exists:users,id',
+            'level' => 'nullable|in:pelopor,jelajah,sigap,utama,lainnya',
         ]);
+
+        $alreadyExists = Pelatih::where('userId', $validated['userId'])
+            ->where('stableId', $stableId)
+            ->exists();
+
+        if ($alreadyExists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pelatih ini sudah terdaftar di stable. Hapus terlebih dahulu sebelum menambahkan kembali.'
+            ], 422);
+        }
 
         $pelatih = Pelatih::create([
             'userId' => $validated['userId'],
             'stableId' => $stableId,
             'isActive' => true,
+            'level' => $validated['level'] ?? null,
         ]);
 
         $pelatih->load('user');
@@ -414,11 +433,15 @@ class StableController extends Controller
 
         $validated = $request->validate([
             'isActive' => 'required|boolean',
+            'level' => 'nullable|in:pelopor,jelajah,sigap,utama,lainnya',
         ]);
 
         Pelatih::where('userId', $userId)
             ->where('stableId', $stableId)
-            ->update(['isActive' => $validated['isActive']]);
+            ->update([
+                'isActive' => $validated['isActive'],
+                'level' => $validated['level'] ?? null,
+            ]);
 
         return response()->json([
             'success' => true,

@@ -6,7 +6,6 @@
 import { Config } from './config.js';
 import { ModalManager } from './modal-manager.js';
 import { FormHandler } from './form-handler.js';
-import { showToast } from '../toast.js';
 
 export const KudaManager = {
     init() {
@@ -18,7 +17,7 @@ export const KudaManager = {
         });
 
         document.getElementById('kudaForm').addEventListener('submit', e => this.submit(e));
-        document.getElementById('kudaTableBody').addEventListener('click', e => this.handleTableClick(e));
+        document.getElementById('kudaTableBody')?.addEventListener('click', e => this.handleTableClick(e));
     },
 
     async submit(e) {
@@ -36,36 +35,30 @@ export const KudaManager = {
     },
 
     handleTableClick(e) {
-        if (e.target.classList.contains('editKudaBtn')) {
-            const id = e.target.dataset.kudaId;
-            const row = e.target.closest('tr');
-            
-            // Get data dari data attributes
-            const nama = row.dataset.kudaNama || '';
-            const jenis = row.dataset.kudaJenis || '';
-            const warna = row.dataset.kudaWarna || '';
-            const pasport = row.dataset.kudaPasport || '';
-            const prestasi = row.dataset.kudaPrestasi || '';
-            const pemilik = row.dataset.kudaPemilik || '';
-            
-            // Populate form dengan semua data
-            document.querySelector('#kudaForm [name="nama"]').value = nama;
-            document.querySelector('#kudaForm [name="pasport"]').value = pasport;
-            document.querySelector('#kudaForm [name="prestasi"]').value = prestasi;
-            document.querySelector('#kudaForm [name="pemilik"]').value = pemilik;
-            
+        const editBtn = e.target.closest('.editKudaBtn');
+        const deleteBtn = e.target.closest('.deleteKudaBtn');
+
+        if (editBtn) {
+            const id = editBtn.dataset.kudaId;
+            const row = editBtn.closest('tr');
+
+            document.querySelector('#kudaForm [name="nama"]').value = row.dataset.kudaNama || '';
+            document.querySelector('#kudaForm [name="pasport"]').value = row.dataset.kudaPasport || '';
+            document.querySelector('#kudaForm [name="pemilik"]').value = row.dataset.kudaPemilik || '';
+            document.querySelector('#kudaForm [name="keahlian"]').value = row.dataset.kudaKeahlian || '';
+            document.querySelector('#kudaForm [name="prestasi"]').value = row.dataset.kudaPrestasi || '';
+
             document.getElementById('kudaForm').dataset.id = id;
             document.getElementById('kudaModalTitle').textContent = 'Edit Kuda';
             ModalManager.openModal('kudaModal');
-        } else if (e.target.classList.contains('deleteKudaBtn')) {
-            const id = e.target.dataset.kudaId;
-            this.delete(id);
+        } else if (deleteBtn) {
+            this.delete(deleteBtn.dataset.kudaId);
         }
     },
 
-    async delete(id) {
+    delete(id) {
         const row = document.querySelector(`[data-kuda-id="${id}"]`);
-        const name = row?.querySelector('td')?.textContent || 'Kuda';
+        const name = row?.dataset.kudaNama || 'Kuda';
         window.deleteKudaId = id;
         document.getElementById('deleteKudaName').textContent = name;
         ModalManager.openModal('deleteKudaModal');

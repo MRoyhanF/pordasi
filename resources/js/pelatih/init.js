@@ -48,6 +48,9 @@ function setupFormHandlers() {
                     });
                 } else {
                     showToast(data.message || 'Gagal menambah pelatih', 'error');
+                    // Tampilkan juga di field error userId jika pesan terkait duplikat
+                    const userIdError = document.getElementById('createUserIdError');
+                    if (userIdError && data.message) userIdError.textContent = data.message;
                 }
                 return;
             }
@@ -87,6 +90,8 @@ function setupFormHandlers() {
                     });
                 } else {
                     showToast(data.message || 'Gagal mengupdate pelatih', 'error');
+                    const stableIdError = document.getElementById('editStableIdError');
+                    if (stableIdError && data.message) stableIdError.textContent = data.message;
                 }
                 return;
             }

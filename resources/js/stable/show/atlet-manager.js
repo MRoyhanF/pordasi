@@ -6,7 +6,6 @@
 import { Config } from './config.js';
 import { ModalManager } from './modal-manager.js';
 import { FormHandler } from './form-handler.js';
-import { showToast } from '../toast.js';
 
 export const AtletManager = {
     init() {
@@ -18,7 +17,7 @@ export const AtletManager = {
         });
 
         document.getElementById('atletForm').addEventListener('submit', e => this.submit(e));
-        document.getElementById('atletTableBody').addEventListener('click', e => this.handleTableClick(e));
+        document.getElementById('atletTableBody')?.addEventListener('click', e => this.handleTableClick(e));
     },
 
     async submit(e) {
@@ -36,36 +35,32 @@ export const AtletManager = {
     },
 
     handleTableClick(e) {
-        if (e.target.classList.contains('editAtletBtn')) {
-            const id = e.target.dataset.atletId;
-            const row = e.target.closest('tr');
-            
-            // Get data dari data attributes
-            const nama = row.dataset.atletNama || '';
-            const jenis = row.dataset.atletJenis || '';
-            const level = row.dataset.atletLevel || '';
-            const lahir = row.dataset.atletLahir || '';
-            const alamat = row.dataset.atletAlamat || '';
-            
-            // Populate form dengan semua data
-            document.querySelector('#atletForm [name="nama"]').value = nama;
-            document.querySelector('#atletForm [name="jenisKelamin"]').value = jenis;
-            document.querySelector('#atletForm [name="level"]').value = level;
-            document.querySelector('#atletForm [name="tanggal_lahir"]').value = lahir;
-            document.querySelector('#atletForm [name="alamat"]').value = alamat;
-            
+        const editBtn = e.target.closest('.editAtletBtn');
+        const deleteBtn = e.target.closest('.deleteAtletBtn');
+
+        if (editBtn) {
+            const id = editBtn.dataset.atletId;
+            const row = editBtn.closest('tr');
+
+            document.querySelector('#atletForm [name="nama"]').value = row.dataset.atletNama || '';
+            document.querySelector('#atletForm [name="jenisKelamin"]').value = row.dataset.atletJenis || '';
+            document.querySelector('#atletForm [name="level"]').value = row.dataset.atletLevel || '';
+            document.querySelector('#atletForm [name="tanggal_lahir"]').value = row.dataset.atletLahir || '';
+            document.querySelector('#atletForm [name="alamat"]').value = row.dataset.atletAlamat || '';
+            document.querySelector('#atletForm [name="status"]').value = row.dataset.atletStatus || '';
+            document.querySelector('#atletForm [name="prestasi"]').value = row.dataset.atletPrestasi || '';
+
             document.getElementById('atletForm').dataset.id = id;
             document.getElementById('atletModalTitle').textContent = 'Edit Atlet';
             ModalManager.openModal('atletModal');
-        } else if (e.target.classList.contains('deleteAtletBtn')) {
-            const id = e.target.dataset.atletId;
-            this.delete(id);
+        } else if (deleteBtn) {
+            this.delete(deleteBtn.dataset.atletId);
         }
     },
 
-    async delete(id) {
+    delete(id) {
         const row = document.querySelector(`[data-atlet-id="${id}"]`);
-        const name = row?.querySelector('td')?.textContent || 'Atlet';
+        const name = row?.dataset.atletNama || 'Atlet';
         window.deleteAtletId = id;
         document.getElementById('deleteAtletName').textContent = name;
         ModalManager.openModal('deleteAtletModal');
