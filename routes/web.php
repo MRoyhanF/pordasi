@@ -10,6 +10,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KudaController;
 use App\Http\Controllers\PelatihController;
 use App\Http\Controllers\AtletController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\PublicBeritaController;
+use App\Http\Controllers\PublicStableController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +28,14 @@ use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/profil', [HomeController::class, 'profil'])->name('public.profil');
+Route::get('/visi-misi', [HomeController::class, 'visiMisi'])->name('public.visi-misi');
+Route::get('/kontak', [HomeController::class, 'kontak'])->name('public.kontak');
+Route::get('/daftar-stable', [PublicStableController::class, 'index'])->name('public.stable.index');
+Route::get('/daftar-stable/{stable}', [PublicStableController::class, 'show'])->name('public.stable.show');
+Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');
+Route::get('/berita/{slug}', [PublicBeritaController::class, 'show'])->name('public.berita.show');
+
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 
@@ -74,6 +85,17 @@ Route::middleware('auth')->group(function () {
     // SuperAdmin-only Routes
     Route::middleware('role:SuperAdmin')->group(function () {
         Route::resource('kabupaten', KabupatenController::class);
+
+        // Berita Management
+        Route::resource('admin/berita', BeritaController::class)->names([
+            'index'   => 'admin.berita.index',
+            'create'  => 'admin.berita.create',
+            'store'   => 'admin.berita.store',
+            'show'    => 'admin.berita.show',
+            'edit'    => 'admin.berita.edit',
+            'update'  => 'admin.berita.update',
+            'destroy' => 'admin.berita.destroy',
+        ]);
 
         // Pengguna (User Management)
         Route::resource('pengguna', UserController::class)->only(['index', 'store', 'update', 'destroy']);

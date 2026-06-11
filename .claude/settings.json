@@ -11,7 +11,14 @@
       "Bash(rm \"c:/Users/ASUS/Documents/php/pordasi/app/Http/Controllers/Auth/EmailVerificationNotificationController.php\")",
       "Bash(rm \"c:/Users/ASUS/Documents/php/pordasi/app/Http/Controllers/Auth/EmailVerificationPromptController.php\")",
       "Bash(composer remove *)",
-      "Bash(composer dump-autoload *)"
+      "Bash(composer dump-autoload *)",
+      "Bash(findstr /i \"home profil visi kontak stable berita\")",
+      "Bash(php -r \"require 'vendor/autoload.php';\")",
+      "Bash(php -l app/Http/Controllers/BeritaController.php)",
+      "Bash(php -l app/Http/Controllers/PublicBeritaController.php)",
+      "Bash(php -l app/Http/Controllers/PublicStableController.php)",
+      "Bash(php -l app/Http/Controllers/HomeController.php)",
+      "Bash(php -l app/Models/Berita.php)"
     ]
   }
 }

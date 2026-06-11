@@ -49,6 +49,13 @@
         Pengguna
     </a>
 
+    <a href="{{ route('admin.berita.index') }}" class="block px-3 sm:px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request()->routeIs('admin.berita.*') ? 'bg-green-600 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"/>
+        </svg>
+        Manajemen Berita
+    </a>
+
     <hr class="border-gray-700 my-3 sm:my-4">
 
     <a href="{{ route('home') }}" class="block px-3 sm:px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request()->routeIs('home') ? 'bg-green-600 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
