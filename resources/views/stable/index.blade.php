@@ -8,14 +8,14 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Header Section -->
-<div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-4 sm:p-6 lg:p-8">
+<div class="bg-gradient-to-r from-green-600 to-green-800 text-white p-4 sm:p-6 lg:p-8">
     <div class="flex items-center justify-between mb-2">
         <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold">Data Stable</h2>
-        <button class="create-btn px-4 py-2 bg-white text-purple-600 rounded-lg hover:bg-gray-100 transition text-sm font-medium">
+        <button class="create-btn px-4 py-2 bg-white text-green-600 rounded-lg hover:bg-gray-100 transition text-sm font-medium">
             + Tambah Stable
         </button>
     </div>
-    <p class="text-purple-100 text-sm sm:text-base">Kelola dan lihat data stable/kandang kuda</p>
+    <p class="text-green-100 text-sm sm:text-base">Kelola dan lihat data stable/kandang kuda</p>
 </div>
 
 <!-- Content -->
@@ -30,7 +30,7 @@
                     type="text" 
                     id="searchInput" 
                     placeholder="Ketik nama stable..." 
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
             </div>
 
@@ -39,7 +39,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Filter Kabupaten</label>
                 <select 
                     id="kabupatenFilter" 
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
                     <option value="">Semua Kabupaten</option>
                 </select>
@@ -50,7 +50,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Data Per Halaman</label>
                 <select 
                     id="itemsPerPage" 
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
                     <option value="5">5 Item</option>
                     <option value="10" selected>10 Item</option>
@@ -92,7 +92,7 @@
                 <tr class="hover:bg-gray-50 border-b border-gray-100 transition" data-kabupaten-id="{{ $item->idKabupaten }}">
                     <td class="px-4 py-3 text-sm text-gray-500">{{ $loop->iteration }}</td>
                     <td class="px-4 py-3">
-                        <a href="{{ route('stable.show', $item->id) }}" class="text-purple-600 hover:text-purple-800 hover:underline font-medium">
+                        <a href="{{ route('stable.show', $item->id) }}" class="text-green-600 hover:text-green-800 hover:underline font-medium">
                             {{ $item->nama }}
                         </a>
                     </td>

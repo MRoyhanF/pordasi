@@ -6,7 +6,7 @@
     <title>Login - PORDASI</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gradient-to-br from-blue-600 to-blue-800 min-h-screen flex items-center justify-center">
+<body class="bg-gradient-to-br from-green-600 to-green-800 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-md">
         <div class="bg-white rounded-lg shadow-2xl p-8">
             <!-- Logo -->
@@ -41,7 +41,7 @@
                         name="email" 
                         value="{{ old('email') }}"
                         required 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent outline-none transition"
                         placeholder="nama@email.com"
                     >
                     @error('email')
@@ -58,7 +58,7 @@
                             id="password" 
                             name="password" 
                             required 
-                            class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                            class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent outline-none transition"
                             placeholder="••••••••"
                         >
                         <button 
@@ -80,7 +80,7 @@
                 <!-- Submit Button -->
                 <button 
                     type="submit" 
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
                 >
                     Masuk
                 </button>
@@ -89,14 +89,14 @@
             <!-- Back Link -->
             <div class="mt-6 text-center">
                 <p class="text-gray-600">
-                    <a href="{{ route('home') }}" class="text-blue-600 hover:text-blue-700 font-medium">Kembali ke Beranda</a>
+                    <a href="{{ route('home') }}" class="text-green-600 hover:text-green-700 font-medium">Kembali ke Beranda</a>
                 </p>
             </div>
 
             <!-- Demo Credentials -->
-            <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <p class="text-sm font-medium text-blue-900 mb-2">Demo Akun:</p>
-                <div class="text-sm text-blue-800 space-y-1">
+            <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <p class="text-sm font-medium text-green-900 mb-2">Demo Akun:</p>
+                <div class="text-sm text-green-800 space-y-1">
                     <p><strong>Email:</strong> superadmin@gmail.com</p>
                     <p><strong>Password:</strong> password</p>
                 </div>
