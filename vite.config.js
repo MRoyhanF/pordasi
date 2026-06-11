@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/kabupaten/init.js',
                 'resources/js/stable/init.js',
                 'resources/js/stable/show/init.js',
+                'resources/js/kuda/init.js',
             ],
             refresh: true,
         }),

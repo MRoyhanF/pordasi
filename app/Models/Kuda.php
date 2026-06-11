@@ -15,16 +15,8 @@ class Kuda extends Model
     /**
      * Get the stable that owns this kuda
      */
-    public function stable()
+    public function stableData()
     {
         return $this->belongsTo(Stable::class, 'stable');
-    }
-
-    /**
-     * Get the kabupaten through stable
-     */
-    public function getKabupatenAttribute()
-    {
-        return $this->stable ? $this->stable->kabupaten : null;
     }
 }

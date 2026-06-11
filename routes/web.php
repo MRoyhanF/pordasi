@@ -7,6 +7,7 @@ use App\Http\Controllers\KabupatenController;
 use App\Http\Controllers\AdminKabupatentController;
 use App\Http\Controllers\StableController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KudaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +60,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/stable/{stable}/pelatih/{user}', [StableController::class, 'updatePelatih'])->name('stable.pelatih.update');
         Route::delete('/stable/{stable}/pelatih/{user}', [StableController::class, 'destroyPelatih'])->name('stable.pelatih.destroy');
         
+        // Kuda Routes
+        Route::get('/kuda/get-stable', [KudaController::class, 'getStable'])->name('kuda.get-stable');
+        Route::resource('kuda', KudaController::class)->only(['index', 'store', 'update', 'destroy']);
+
         // Pengguna (User Management)
         Route::resource('pengguna', UserController::class)->only(['index', 'store', 'update', 'destroy']);
 
