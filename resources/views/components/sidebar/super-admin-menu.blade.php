@@ -14,7 +14,7 @@
         Stable
     </a>
 
-    <a href="#" class="block px-3 sm:px-4 py-2 text-gray-300 hover:bg-gray-800 rounded-lg transition text-sm sm:text-base">
+    <a href="{{ route('atlet.index') }}" class="block px-3 sm:px-4 py-2 rounded-lg transition text-sm sm:text-base {{ request()->routeIs('atlet.*') ? 'bg-green-600 text-white' : 'text-gray-300 hover:bg-gray-800' }}">
         <svg class="w-4 h-4 sm:w-5 sm:h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
         </svg>

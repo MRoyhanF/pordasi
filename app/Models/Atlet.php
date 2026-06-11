@@ -10,7 +10,7 @@ class Atlet extends Model
     use SoftDeletes;
 
     protected $table = 'atlet';
-    protected $fillable = ['idStable', 'nama', 'level', 'jenisKelamin', 'tanggal_lahir', 'asal_daerah'];
+    protected $fillable = ['idStable', 'nama', 'level', 'jenisKelamin', 'tanggal_lahir', 'alamat'];
 
     /**
      * Get the stable that owns this atlet

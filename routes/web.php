@@ -9,6 +9,7 @@ use App\Http\Controllers\StableController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KudaController;
 use App\Http\Controllers\PelatihController;
+use App\Http\Controllers\AtletController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,6 +73,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/pelatih', [PelatihController::class, 'store'])->name('pelatih.store');
         Route::put('/pelatih/{userId}/{stableId}', [PelatihController::class, 'update'])->name('pelatih.update');
         Route::delete('/pelatih/{userId}/{stableId}', [PelatihController::class, 'destroy'])->name('pelatih.destroy');
+
+        // Atlet Routes
+        Route::get('/atlet/get-stable', [AtletController::class, 'getStable'])->name('atlet.get-stable');
+        Route::resource('atlet', AtletController::class)->only(['index', 'store', 'update', 'destroy']);
 
         // Pengguna (User Management)
         Route::resource('pengguna', UserController::class)->only(['index', 'store', 'update', 'destroy']);

@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/js/kuda/init.js',
                 'resources/js/pengguna/init.js',
                 'resources/js/pelatih/init.js',
+                'resources/js/atlet/init.js',
             ],
             refresh: true,
         }),
