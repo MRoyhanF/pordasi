@@ -30,7 +30,7 @@
                     type="text"
                     id="searchInput"
                     placeholder="Ketik nama atau email..."
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
             </div>
 
@@ -39,7 +39,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Filter Role</label>
                 <select
                     id="roleFilter"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
                     <option value="">Semua Role</option>
                     <option value="SuperAdmin">SuperAdmin</option>
@@ -54,7 +54,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Data Per Halaman</label>
                 <select
                     id="itemsPerPage"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 >
                     <option value="5">5 Item</option>
                     <option value="10" selected>10 Item</option>

@@ -13,21 +13,21 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Nama <span class="text-red-500">*</span></label>
                 <input type="text" name="name" id="createName"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                     placeholder="Nama lengkap">
                 <span id="createNameError" class="text-red-500 text-xs mt-1 block"></span>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
                 <input type="email" name="email" id="createEmail"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                     placeholder="contoh@email.com">
                 <span id="createEmailError" class="text-red-500 text-xs mt-1 block"></span>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Role <span class="text-red-500">*</span></label>
                 <select name="role" id="createRole"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
                     <option value="">Pilih Role</option>
                     <option value="SuperAdmin">SuperAdmin</option>
                     <option value="Admin">Admin</option>
@@ -39,14 +39,14 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Password <span class="text-red-500">*</span></label>
                 <input type="password" name="password" id="createPassword"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                     placeholder="Minimal 8 karakter">
                 <span id="createPasswordError" class="text-red-500 text-xs mt-1 block"></span>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password <span class="text-red-500">*</span></label>
                 <input type="password" name="password_confirmation" id="createPasswordConfirmation"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                     placeholder="Ulangi password">
             </div>
             <div class="flex justify-end gap-3 pt-2">

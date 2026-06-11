@@ -5,14 +5,14 @@
 <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
 
 <!-- Header Section -->
-<div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 sm:p-6 lg:p-8">
+<div class="bg-gradient-to-r from-green-600 to-green-800 text-white p-4 sm:p-6 lg:p-8">
     <div class="flex items-center justify-between mb-2">
         <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold">{{ $kabupaten->name }}</h2>
         <a href="{{ route('kabupaten.index') }}" class="px-3 sm:px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg text-sm sm:text-base transition">
             ← Kembali
         </a>
     </div>
-    <p class="text-blue-100 text-sm sm:text-base">Lihat detail data untuk {{ $kabupaten->name }}</p>
+    <p class="text-green-100 text-sm sm:text-base">Lihat detail data untuk {{ $kabupaten->name }}</p>
 </div>
 
 <!-- Content -->
@@ -109,7 +109,7 @@
                         </td>
                         <td class="px-4 sm:px-6 py-4 text-sm text-center">
                             <div class="flex justify-center gap-2">
-                                <button class="edit-btn p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition" 
+                                <button class="edit-btn p-2 text-green-600 hover:bg-green-100 rounded-lg transition" 
                                     data-id="{{ $admin->idUser }}" data-name="{{ $admin->user->name }}" title="Edit">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
@@ -205,9 +205,9 @@
         </div>
         <div class="p-4 sm:p-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                <div class="text-center p-4 bg-green-50 rounded-lg">
                     <p class="text-gray-600 text-sm mb-2">Atlet Mula</p>
-                    <p class="text-2xl font-bold text-blue-600">{{ $kabupaten->atlets()->where('level', 'Mula')->count() }}</p>
+                    <p class="text-2xl font-bold text-green-600">{{ $kabupaten->atlets()->where('level', 'Mula')->count() }}</p>
                 </div>
                 <div class="text-center p-4 bg-purple-50 rounded-lg">
                     <p class="text-gray-600 text-sm mb-2">Atlet Madya</p>

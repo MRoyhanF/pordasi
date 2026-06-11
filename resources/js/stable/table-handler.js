@@ -17,12 +17,12 @@ export class TableHandler {
         this.pageNumbers = document.getElementById('pageNumbers');
         this.prevBtn = document.getElementById('prevBtn');
         this.nextBtn = document.getElementById('nextBtn');
-        
+
         this.itemsPerPage = parseInt(this.itemsPerPageSelect.value) || 10;
         this.currentPage = 1;
         this.allRows = Array.from(this.tbody.querySelectorAll('tr:not(:has(td[colspan]))'));
         this.filteredRows = [...this.allRows];
-        
+
         this.init();
     }
 
@@ -111,7 +111,7 @@ export class TableHandler {
         const maxButtons = 5;
         let startPage = Math.max(1, this.currentPage - Math.floor(maxButtons / 2));
         let endPage = Math.min(totalPages, startPage + maxButtons - 1);
-        
+
         if (endPage - startPage + 1 < maxButtons) {
             startPage = Math.max(1, endPage - maxButtons + 1);
         }
@@ -134,7 +134,7 @@ export class TableHandler {
         button.textContent = pageNum;
         button.type = 'button';
         button.className = pageNum === this.currentPage
-            ? 'px-3 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium'
+            ? 'px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium'
             : 'px-3 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-200 transition text-sm font-medium';
         button.addEventListener('click', () => this.goToPage(pageNum));
         return button;

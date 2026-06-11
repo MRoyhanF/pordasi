@@ -101,7 +101,7 @@ export class TableHandler {
             btn.textContent = i;
             btn.type = 'button';
             btn.className = i === this.currentPage
-                ? 'px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium'
+                ? 'px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium'
                 : 'px-3 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-200 transition text-sm font-medium';
             btn.addEventListener('click', () => { this.currentPage = i; this.render(); });
             this.pageNumbers.appendChild(btn);

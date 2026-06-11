@@ -8,19 +8,19 @@
 <script>window.stableId = {{ $stable->id }};</script>
 
 <!-- Header Section -->
-<div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-4 sm:p-6 lg:p-8">
+<div class="bg-gradient-to-r from-green-600 to-green-800 text-white p-4 sm:p-6 lg:p-8">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
         <div class="flex-1">
-            <a href="{{ route('stable.index') }}" class="text-purple-200 hover:text-white transition text-sm mb-2 inline-block">
+            <a href="{{ route('stable.index') }}" class="text-green-200 hover:text-white transition text-sm mb-2 inline-block">
                 â† Kembali ke Daftar Stable
             </a>
             <h2 class="text-2xl sm:text-3xl font-bold mt-2">{{ $stable->nama }}</h2>
-            <p class="text-purple-100 text-sm mt-1">
+            <p class="text-green-100 text-sm mt-1">
                 Kabupaten: <strong>{{ $stable->kabupaten->name ?? '-' }}</strong>
             </p>
         </div>
         <div class="flex gap-2 flex-wrap">
-            <a href="{{ route('stable.edit', $stable->id) }}" class="px-4 py-2 bg-white text-purple-600 rounded-lg hover:bg-gray-100 transition text-sm font-medium flex items-center gap-2 whitespace-nowrap">
+            <a href="{{ route('stable.edit', $stable->id) }}" class="px-4 py-2 bg-white text-green-600 rounded-lg hover:bg-gray-100 transition text-sm font-medium flex items-center gap-2 whitespace-nowrap">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
                 </svg>

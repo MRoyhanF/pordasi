@@ -18,7 +18,7 @@
             
             <div class="mb-4">
                 <label class="flex items-center cursor-pointer">
-                    <input type="checkbox" id="editStatus" name="isActive" value="1" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                    <input type="checkbox" id="editStatus" name="isActive" value="1" class="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500" />
                     <span class="ml-3 text-sm text-gray-700">Admin Aktif</span>
                 </label>
             </div>
@@ -27,7 +27,7 @@
                 <button type="button" class="close-modal flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm font-medium">
                     Batal
                 </button>
-                <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium">
+                <button type="submit" class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium">
                     Simpan
                 </button>
             </div>

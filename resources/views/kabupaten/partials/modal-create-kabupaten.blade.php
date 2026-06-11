@@ -7,7 +7,7 @@
             @csrf
             <div class="mb-4">
                 <label for="createName" class="block text-sm font-medium text-gray-700 mb-2">Nama Kabupaten / Kota</label>
-                <input type="text" id="createName" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: Jambi" required>
+                <input type="text" id="createName" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Contoh: Jambi" required>
                 <p id="createError" class="text-red-600 text-sm mt-1"></p>
             </div>
             
@@ -15,7 +15,7 @@
                 <button type="button" class="close-modal flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm font-medium">
                     Batal
                 </button>
-                <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium">
+                <button type="submit" class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium">
                     Simpan
                 </button>
             </div>
