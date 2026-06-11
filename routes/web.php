@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminKabupatentController;
 use App\Http\Controllers\StableController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KudaController;
+use App\Http\Controllers\PelatihController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,6 +64,14 @@ Route::middleware('auth')->group(function () {
         // Kuda Routes
         Route::get('/kuda/get-stable', [KudaController::class, 'getStable'])->name('kuda.get-stable');
         Route::resource('kuda', KudaController::class)->only(['index', 'store', 'update', 'destroy']);
+
+        // Pelatih Routes
+        Route::get('/pelatih/get-users', [PelatihController::class, 'getUsers'])->name('pelatih.get-users');
+        Route::get('/pelatih/get-stable', [PelatihController::class, 'getStable'])->name('pelatih.get-stable');
+        Route::get('/pelatih', [PelatihController::class, 'index'])->name('pelatih.index');
+        Route::post('/pelatih', [PelatihController::class, 'store'])->name('pelatih.store');
+        Route::put('/pelatih/{userId}/{stableId}', [PelatihController::class, 'update'])->name('pelatih.update');
+        Route::delete('/pelatih/{userId}/{stableId}', [PelatihController::class, 'destroy'])->name('pelatih.destroy');
 
         // Pengguna (User Management)
         Route::resource('pengguna', UserController::class)->only(['index', 'store', 'update', 'destroy']);
